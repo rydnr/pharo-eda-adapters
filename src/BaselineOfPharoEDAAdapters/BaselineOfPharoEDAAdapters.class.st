@@ -10,6 +10,7 @@ BaselineOfPharoEDAAdapters >> baseline: spec [
 	spec
 		for: #common
 		do: [ spec blessing: #baseline.
+			self includePharoEDACommon: spec.
 			self declarePackagesIn: spec.
 			self declareGroupsIn: spec ]
 ]
@@ -29,8 +30,15 @@ BaselineOfPharoEDAAdapters >> declareGroupsIn: spec [
 { #category : #meta }
 BaselineOfPharoEDAAdapters >> declarePackagesIn: spec [
 	spec
-		package: #'EDAA-Domain';
+		package: #'EDAA-Domain' with: [ spec requires: #('PharoEDACommon') ];
 		package: #'EDAA-Domain-Tests'
 			with: [ spec requires: #('EDAA-Domain') ]
- 
+]
+
+{ #category : #dependencies }
+BaselineOfPharoEDAAdapters >> includePharoEDACommon: spec [
+	spec
+		baseline: 'PharoEDACommon'
+		with: [ spec repository: 'github://osoco/pharo-eda-common:main' ].
+	^ spec
 ]
