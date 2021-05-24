@@ -22,19 +22,22 @@ BaselineOfPharoEDAAdapters >> declareGroupsIn: spec [
 	spec
 		group: 'core'
 			with:
-			#(#'EDAA-Domain' #'PharoEDACommon' #'Stamp');
-		group: 'tests'
-			with:
-			#(#'EDAA-Domain-Tests');
-		group: 'default' with: #('core' 'tests')
+			#(#'EDAA-EventStore-InMemory' #'EDAA-EventStore-Voyage' #'EDAA-Messaging-Stomp' #'EDAA-Projections-Voyage' #'EDAA-SMTP');
+		group: 'default' with: #('core')
 ]
 
 { #category : #meta }
 BaselineOfPharoEDAAdapters >> declarePackagesIn: spec [
 	spec
-		package: #'EDAA-Domain' with: [ spec requires: #('PharoEDACommon') ];
-		package: #'EDAA-Domain-Tests'
-			with: [ spec requires: #('EDAA-Domain') ]
+		package: #'EDAA-EventStore-InMemory'
+			with: [ spec requires: #('PharoEDACommon') ];
+		package: #'EDAA-EventStore-Voyage'
+			with: [ spec requires: #('Voyage' 'PharoEDACommon') ];
+		package: #'EDAA-Messaging-Stomp'
+			with: [ spec requires: #('Stamp' 'PharoEDACommon') ];
+		package: #'EDAA-Projections-Voyage'
+			with: [ spec requires: #('Voyage' 'PharoEDACommon') ];
+		package: #'EDAA-SMTP' with: [ spec requires: #('PharoEDACommon') ]
 ]
 
 { #category : #dependencies }
