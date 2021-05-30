@@ -1,8 +1,8 @@
 Class {
 	#name : #EDAAVOMongoRepository,
 	#superclass : #VOMongoRepository,
-	#traits : 'EDACPrintOnHelper',
-	#classTraits : 'EDACPrintOnHelper classTrait',
+	#traits : 'EDACTPrintOnHelper',
+	#classTraits : 'EDACTPrintOnHelper classTrait',
 	#category : #'EDAA-EventStore-Voyage'
 }
 

@@ -20,8 +20,8 @@ Children (not instances) of this class would be configured via the Settings fram
 Class {
 	#name : #EDAAStompTopicListener,
 	#superclass : #EDATopicListener,
-	#traits : 'EDACPrintOnHelper + EDACTErrorHelper',
-	#classTraits : 'EDACPrintOnHelper classTrait + EDACTErrorHelper classTrait',
+	#traits : 'EDACTPrintOnHelper + EDACTErrorHelper',
+	#classTraits : 'EDACTPrintOnHelper classTrait + EDACTErrorHelper classTrait',
 	#instVars : [
 		'client',
 		'listenerProcess',
