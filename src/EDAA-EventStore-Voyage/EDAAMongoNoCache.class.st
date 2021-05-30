@@ -1,23 +1,23 @@
 Class {
-	#name : #EDAMongoNoCache,
+	#name : #EDAAMongoNoCache,
 	#superclass : #VOCache,
 	#category : #'EDAA-EventStore-Voyage'
 }
 
 { #category : #accessing }
-EDAMongoNoCache >> at: anOID put: anObject [
+EDAAMongoNoCache >> at: anOID put: anObject [
 	"Do nothing"
 ]
 
 { #category : #accessing }
-EDAMongoNoCache >> keyAtValue: anObject [
+EDAAMongoNoCache >> keyAtValue: anObject [
 	"Do nothing"
 	^ nil
 
 ]
 
 { #category : #accessing }
-EDAMongoNoCache >> keyAtValue: anObject ifAbsent: aBlock [
+EDAAMongoNoCache >> keyAtValue: anObject ifAbsent: aBlock [
 	"Do nothing"
 
 	^ nil

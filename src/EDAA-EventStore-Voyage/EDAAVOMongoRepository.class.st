@@ -1,5 +1,5 @@
 Class {
-	#name : #EDAVOMongoRepository,
+	#name : #EDAAVOMongoRepository,
 	#superclass : #VOMongoRepository,
 	#traits : 'EDAPrintOnHelper',
 	#classTraits : 'EDAPrintOnHelper classTrait',
@@ -7,17 +7,17 @@ Class {
 }
 
 { #category : #voyage }
-EDAVOMongoRepository class >> voyageCollectionName [
+EDAAVOMongoRepository class >> voyageCollectionName [
 	^ 'EventSourcingEvent'
 ]
 
 { #category : #voyage }
-EDAVOMongoRepository >> collectionNameFor: aClass [
+EDAAVOMongoRepository >> collectionNameFor: aClass [
 	^ aClass voyageCollectionName
 ]
 
 { #category : #persistence }
-EDAVOMongoRepository >> selectMany: aClass where: aBlock sortBy: sortBlock [
+EDAAVOMongoRepository >> selectMany: aClass where: aBlock sortBy: sortBlock [
 	^ self selectManyOperation
 		queryClass: aClass;
 		where: aBlock;

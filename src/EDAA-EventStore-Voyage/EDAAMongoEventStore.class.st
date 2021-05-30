@@ -1,5 +1,5 @@
 Class {
-	#name : #EDAMongoEventStore,
+	#name : #EDAAMongoEventStore,
 	#superclass : #EDAEventStore,
 	#traits : 'EDAPrintOnHelper + EDATMongoHelper',
 	#classTraits : 'EDAPrintOnHelper classTrait + EDATMongoHelper classTrait',
@@ -25,32 +25,32 @@ Class {
 }
 
 { #category : #accessing }
-EDAMongoEventStore class >> authenticationMechanism [
+EDAAMongoEventStore class >> authenticationMechanism [
 	^ authenticationMechanism
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> authenticationMechanism: anObject [
+EDAAMongoEventStore class >> authenticationMechanism: anObject [
 	authenticationMechanism := anObject
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> databaseName [
+EDAAMongoEventStore class >> databaseName [
 	^ databaseName
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> databaseName: anObject [
+EDAAMongoEventStore class >> databaseName: anObject [
 	databaseName := anObject
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> debug [
+EDAAMongoEventStore class >> debug [
 	^ debug
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> debug: aBoolean [
+EDAAMongoEventStore class >> debug: aBoolean [
 	debug = aBoolean
 		ifTrue: [ ^ self ].
 	debug := aBoolean.
@@ -58,7 +58,7 @@ EDAMongoEventStore class >> debug: aBoolean [
 ]
 
 { #category : #'class initialization' }
-EDAMongoEventStore class >> doInitialize [
+EDAAMongoEventStore class >> doInitialize [
 	self urls: nil.
 	self tls: nil.
 	self databaseName: nil.
@@ -75,12 +75,12 @@ EDAMongoEventStore class >> doInitialize [
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> enableReplication [
+EDAAMongoEventStore class >> enableReplication [
 	^ enableReplication
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> enableReplication: aBoolean [
+EDAAMongoEventStore class >> enableReplication: aBoolean [
 	enableReplication = aBoolean
 		ifTrue: [ ^ self ].
 	enableReplication := aBoolean.
@@ -88,12 +88,12 @@ EDAMongoEventStore class >> enableReplication: aBoolean [
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> enableSingleton [
+EDAAMongoEventStore class >> enableSingleton [
 	^ enableSingleton
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> enableSingleton: aBoolean [
+EDAAMongoEventStore class >> enableSingleton: aBoolean [
 	enableSingleton = aBoolean
 		ifTrue: [ ^ self ].
 	enableSingleton := aBoolean.
@@ -101,12 +101,12 @@ EDAMongoEventStore class >> enableSingleton: aBoolean [
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> ensuringCurrentOnSave [
+EDAAMongoEventStore class >> ensuringCurrentOnSave [
 	^ ensuringCurrentOnSave
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> ensuringCurrentOnSave: aBoolean [
+EDAAMongoEventStore class >> ensuringCurrentOnSave: aBoolean [
 	ensuringCurrentOnSave = aBoolean
 		ifTrue: [ ^ self ].
 	ensuringCurrentOnSave := aBoolean.
@@ -114,12 +114,12 @@ EDAMongoEventStore class >> ensuringCurrentOnSave: aBoolean [
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> ensuringCurrentReferencesOnQueries [
+EDAAMongoEventStore class >> ensuringCurrentReferencesOnQueries [
 	^ ensuringCurrentReferencesOnQueries
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> ensuringCurrentReferencesOnQueries: aBoolean [
+EDAAMongoEventStore class >> ensuringCurrentReferencesOnQueries: aBoolean [
 	ensuringCurrentReferencesOnQueries = aBoolean
 		ifTrue: [ ^ self ].
 	ensuringCurrentReferencesOnQueries := aBoolean.
@@ -127,12 +127,12 @@ EDAMongoEventStore class >> ensuringCurrentReferencesOnQueries: aBoolean [
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> forceEager [
+EDAAMongoEventStore class >> forceEager [
 	^ forceEager
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> forceEager: aBoolean [
+EDAAMongoEventStore class >> forceEager: aBoolean [
 	forceEager = aBoolean
 		ifTrue: [ ^ self ].
 	forceEager := aBoolean.
@@ -140,17 +140,17 @@ EDAMongoEventStore class >> forceEager: aBoolean [
 ]
 
 { #category : #'class initialization' }
-EDAMongoEventStore class >> initialize [
+EDAAMongoEventStore class >> initialize [
 	self doInitialize
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> lazySynchronize [
+EDAAMongoEventStore class >> lazySynchronize [
 	^ lazySynchronize
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> lazySynchronize: aBoolean [
+EDAAMongoEventStore class >> lazySynchronize: aBoolean [
 	lazySynchronize = aBoolean
 		ifTrue: [ ^ self ].
 	lazySynchronize := aBoolean.
@@ -158,22 +158,22 @@ EDAMongoEventStore class >> lazySynchronize: aBoolean [
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> password [
+EDAAMongoEventStore class >> password [
 	^ password
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> password: anObject [
+EDAAMongoEventStore class >> password: anObject [
 	password := anObject
 ]
 
 { #category : #'refresh settings' }
-EDAMongoEventStore class >> refreshVoyageSettings [
-	EDAVOMongoRepository allInstancesDo: [ :repo | self refreshVoyageSettingsOn: repo ]
+EDAAMongoEventStore class >> refreshVoyageSettings [
+	EDAAVOMongoRepository allInstancesDo: [ :repo | self refreshVoyageSettingsOn: repo ]
 ]
 
 { #category : #'refresh settings' }
-EDAMongoEventStore class >> refreshVoyageSettingsOn: aRepository [
+EDAAMongoEventStore class >> refreshVoyageSettingsOn: aRepository [
 	aRepository username: self username.
 	aRepository password: self password.
 	aRepository debug: self debug.
@@ -190,42 +190,42 @@ EDAMongoEventStore class >> refreshVoyageSettingsOn: aRepository [
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> tls [
+EDAAMongoEventStore class >> tls [
 	^ tls
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> tls: aBoolean [
+EDAAMongoEventStore class >> tls: aBoolean [
 	tls := aBoolean
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> urls [
+EDAAMongoEventStore class >> urls [
 	^ urls
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> urls: aString [
+EDAAMongoEventStore class >> urls: aString [
 	urls := aString
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> username [
+EDAAMongoEventStore class >> username [
 	^ username
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> username: anObject [
+EDAAMongoEventStore class >> username: anObject [
 	username := anObject
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> wireProtocolEnabled [
+EDAAMongoEventStore class >> wireProtocolEnabled [
 	^ wireProtocolEnabled
 ]
 
 { #category : #accessing }
-EDAMongoEventStore class >> wireProtocolEnabled: aBoolean [
+EDAAMongoEventStore class >> wireProtocolEnabled: aBoolean [
 	wireProtocolEnabled = aBoolean
 		ifTrue: [ ^ self ].
 	wireProtocolEnabled := aBoolean.
@@ -233,7 +233,7 @@ EDAMongoEventStore class >> wireProtocolEnabled: aBoolean [
 ]
 
 { #category : #persistence }
-EDAMongoEventStore >> allEventsOfTenant: aTenant [
+EDAAMongoEventStore >> allEventsOfTenant: aTenant [
 	| eventsCriteria |
 	eventsCriteria := (OrderedCollection
 		with: 'tenant' -> aTenant greaseString)
@@ -244,7 +244,7 @@ EDAMongoEventStore >> allEventsOfTenant: aTenant [
 ]
 
 { #category : #persistence }
-EDAMongoEventStore >> findEventsOfTenant: aTenant ofAggregate: anAggregateRootClass whereCriteria: aCriteriaDictionary [
+EDAAMongoEventStore >> findEventsOfTenant: aTenant ofAggregate: anAggregateRootClass whereCriteria: aCriteriaDictionary [
 	| eventsCriteria |
 	eventsCriteria := Dictionary newFrom: aCriteriaDictionary.
 	eventsCriteria at: 'tenant' put: aTenant greaseString.
@@ -255,14 +255,14 @@ EDAMongoEventStore >> findEventsOfTenant: aTenant ofAggregate: anAggregateRootCl
 ]
 
 { #category : #persistence }
-EDAMongoEventStore >> findEventsOfTenant: aTenant ofAggregate: anAggregateRootClass whereId: aNumber [
+EDAAMongoEventStore >> findEventsOfTenant: aTenant ofAggregate: anAggregateRootClass whereId: aNumber [
 	^ self
 		findEventsOfTenant: aTenant ofAggregate: anAggregateRootClass
 		whereCriteria: (OrderedCollection with: 'id' -> aNumber) asDictionary
 ]
 
 { #category : #persistence }
-EDAMongoEventStore >> initBackendRepository [
+EDAAMongoEventStore >> initBackendRepository [
 	| result |
 	result := self mongoRepositoryClass
 		mongoUrls: (self csvToCollection: self class urls)
@@ -288,11 +288,11 @@ EDAMongoEventStore >> initBackendRepository [
 ]
 
 { #category : #persistence }
-EDAMongoEventStore >> mongoRepositoryClass [
-	^ EDAVOMongoRepository
+EDAAMongoEventStore >> mongoRepositoryClass [
+	^ EDAAVOMongoRepository
 ]
 
 { #category : #persistence }
-EDAMongoEventStore >> saveEvents: anEventCollection [
+EDAAMongoEventStore >> saveEvents: anEventCollection [
 	anEventCollection do: [ :event | event save ]
 ]

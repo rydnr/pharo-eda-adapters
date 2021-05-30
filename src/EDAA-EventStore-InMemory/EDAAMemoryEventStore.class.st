@@ -1,21 +1,21 @@
 Class {
-	#name : #EDAMemoryEventStore,
+	#name : #EDAAMemoryEventStore,
 	#superclass : #EDAEventStore,
 	#category : #'EDAA-EventStore-InMemory'
 }
 
 { #category : #persistence }
-EDAMemoryEventStore >> allEvents [
+EDAAMemoryEventStore >> allEvents [
 	^ EDAEventSourcingEvent selectAll
 ]
 
 { #category : #accessing }
-EDAMemoryEventStore >> findEventsOfTenant: aTenant ofAggregate: anAggregate whereCriteria: aDictionary [
+EDAAMemoryEventStore >> findEventsOfTenant: aTenant ofAggregate: anAggregate whereCriteria: aDictionary [
 	^ self shouldBeImplemented
 ]
 
 { #category : #persistence }
-EDAMemoryEventStore >> findEventsOfTenant: aTenant ofAggregate: anAggregateRootClass whereId: aNumber [
+EDAAMemoryEventStore >> findEventsOfTenant: aTenant ofAggregate: anAggregateRootClass whereId: aNumber [
 	^ EDAEventSourcingEvent
 		selectMany: [ :event |
 			event aggregateRootClass = anAggregateRootClass asString
@@ -23,7 +23,7 @@ EDAMemoryEventStore >> findEventsOfTenant: aTenant ofAggregate: anAggregateRootC
 ]
 
 { #category : #persistence }
-EDAMemoryEventStore >> initBackendRepository [
+EDAAMemoryEventStore >> initBackendRepository [
 	| result |
 	result := VOMemoryRepository new.
 	result enableSingleton.
@@ -31,6 +31,6 @@ EDAMemoryEventStore >> initBackendRepository [
 ]
 
 { #category : #persistence }
-EDAMemoryEventStore >> saveEvents: anEventCollection [
+EDAAMemoryEventStore >> saveEvents: anEventCollection [
 	anEventCollection do: [ :event | event save ]
 ]

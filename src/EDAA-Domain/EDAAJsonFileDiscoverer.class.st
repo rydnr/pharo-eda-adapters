@@ -1,5 +1,5 @@
 Class {
-	#name : #JsonFileDiscoverer,
+	#name : #EDAAJsonFileDiscoverer,
 	#superclass : #Object,
 	#instVars : [
 		'jsonFile',
@@ -9,34 +9,34 @@ Class {
 }
 
 { #category : #'instance creation' }
-JsonFileDiscoverer class >> forJsonFile: aFile [
+EDAAJsonFileDiscoverer class >> forJsonFile: aFile [
 	^ self new jsonFile: aFile; yourself
 ]
 
 { #category : #accessing }
-JsonFileDiscoverer >> candidates [
+EDAAJsonFileDiscoverer >> candidates [
 	^ candidates
 		ifNil: [ self candidates: (self processJsonFile: self jsonFile).
 						candidates ]
 ]
 
 { #category : #accessing }
-JsonFileDiscoverer >> candidates: anObject [
+EDAAJsonFileDiscoverer >> candidates: anObject [
 	candidates := anObject
 ]
 
 { #category : #accessing }
-JsonFileDiscoverer >> jsonFile [
+EDAAJsonFileDiscoverer >> jsonFile [
 	^ jsonFile
 ]
 
 { #category : #accessing }
-JsonFileDiscoverer >> jsonFile: anObject [
+EDAAJsonFileDiscoverer >> jsonFile: anObject [
 	jsonFile := anObject
 ]
 
 { #category : #accessing }
-JsonFileDiscoverer >> processJsonFile: aFile [
+EDAAJsonFileDiscoverer >> processJsonFile: aFile [
 	| result map |
 	result := OrderedCollection new.
 	map := (NeoJSONReader on: aFile name readStream) parseMap.
@@ -44,8 +44,6 @@ JsonFileDiscoverer >> processJsonFile: aFile [
 		keysAndValuesDo: [ :k :v | 
 			result
 				add:
-					(Dictionary new
-						at: k put: v;
-						yourself) ].
+					(EDAACandidate withKey: k value: v) ].
 	^ result
 ]
