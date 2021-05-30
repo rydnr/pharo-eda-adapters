@@ -29,6 +29,10 @@ BaselineOfPharoEDAAdapters >> declareGroupsIn: spec [
 { #category : #meta }
 BaselineOfPharoEDAAdapters >> declarePackagesIn: spec [
 	spec
+		package: #'EDAA-Domain'
+			with: [ spec requires: #('PharoEDACommon') ];
+		package: #'EDAA-Domain-Tests'
+			with: [ spec requires: #('EDAA-Domain') ];
 		package: #'EDAA-EventStore-InMemory'
 			with: [ spec requires: #('PharoEDACommon') ];
 		package: #'EDAA-EventStore-Voyage'
