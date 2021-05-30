@@ -1,8 +1,8 @@
 Class {
 	#name : #EDAAMongoEventStore,
 	#superclass : #EDAEventStore,
-	#traits : 'EDAPrintOnHelper + EDATMongoHelper',
-	#classTraits : 'EDAPrintOnHelper classTrait + EDATMongoHelper classTrait',
+	#traits : 'EDACPrintOnHelper + EDACTMongoHelper',
+	#classTraits : 'EDACPrintOnHelper classTrait + EDACTMongoHelper classTrait',
 	#classInstVars : [
 		'username',
 		'password',
