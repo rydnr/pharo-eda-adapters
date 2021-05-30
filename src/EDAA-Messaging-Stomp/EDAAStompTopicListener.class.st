@@ -18,10 +18,10 @@ Children (not instances) of this class would be configured via the Settings fram
 - subscriptionId: the id of the listener.
 "
 Class {
-	#name : #EDAStompTopicListener,
+	#name : #EDAAStompTopicListener,
 	#superclass : #EDATopicListener,
-	#traits : 'EDAPrintOnHelper + EDATErrorHelper',
-	#classTraits : 'EDAPrintOnHelper classTrait + EDATErrorHelper classTrait',
+	#traits : 'EDACPrintOnHelper + EDACTErrorHelper',
+	#classTraits : 'EDACPrintOnHelper classTrait + EDACTErrorHelper classTrait',
 	#instVars : [
 		'client',
 		'listenerProcess',
@@ -43,19 +43,69 @@ Class {
 	#category : #'EDAA-Messaging-Stomp'
 }
 
-{ #category : #accessing }
-EDAStompTopicListener class >> logFinish: message usingClient: aClient withConfig: aConfig [
-	self logInfoMessage: 'Published message ', message greaseString , ' in ', aConfig destination greaseString , '.'
+{ #category : #logging }
+EDAAStompTopicListener class >> logDebugMessage: aMessage beautify: aBoolean [
+	EDACLoggingSettings debugEnabled
+		ifTrue: [ self
+				logMessage: aMessage
+				inCategory: 'DEBUG'
+				inStream: self defaultStream
+				beautify: aBoolean ]
+]
+
+{ #category : #logging }
+EDAAStompTopicListener class >> logErrorMessage: aMessage beautify: aBoolean [
+	EDACLoggingSettings errorEnabled
+		ifTrue: [ self
+				logMessage: aMessage
+				inCategory: 'ERROR'
+				inStream: self defaultStream
+				beautify: aBoolean ]
 ]
 
 { #category : #accessing }
-EDAStompTopicListener class >> logReceivingMessage: message usingClient: aClient from: aSource [
+EDAAStompTopicListener class >> logFinish: message usingClient: aClient withConfig: aConfig [
+	self logInfoMessage: 'Published message ', message greaseString , ' in ', aConfig destination greaseString , '.'
+]
+
+{ #category : #logging }
+EDAAStompTopicListener class >> logInfoMessage: aMessage beautify: aBoolean [
+	EDACLoggingSettings infoEnabled
+		ifTrue: [ self
+				logMessage: aMessage
+				inCategory: 'INFO '
+				inStream: self defaultStream
+				beautify: aBoolean ]
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener class >> logReceivingMessage: message usingClient: aClient from: aSource [
 	self
 		logInfoMessage: 'Receiving message in ' , aSource greaseString , '.'
 ]
 
+{ #category : #logging }
+EDAAStompTopicListener class >> logTraceMessage: aMessage beautify: aBoolean [
+	EDACLoggingSettings traceEnabled
+		ifTrue: [ self
+				logMessage: aMessage
+				inCategory: 'TRACE'
+				inStream: self defaultStream
+				beautify: aBoolean ]
+]
+
+{ #category : #logging }
+EDAAStompTopicListener class >> logWarningMessage: aMessage beautify: aBoolean [
+	^ EDACLoggingSettings warningEnabled
+		ifTrue: [ self
+				logMessage: aMessage
+				inCategory: 'WARN '
+				inStream: self defaultStream
+				beautify: aBoolean ]
+]
+
 { #category : #'instance creation' }
-EDAStompTopicListener class >> withConfig: aConfig [
+EDAAStompTopicListener class >> withConfig: aConfig [
 	| result |
 	result := self new.
 	result config: aConfig.
@@ -64,7 +114,7 @@ EDAStompTopicListener class >> withConfig: aConfig [
 ]
 
 { #category : #lifecycle }
-EDAStompTopicListener >> asyncOnMessageDo: aBlock usingClient: aClient withConfig: aConfig [
+EDAAStompTopicListener >> asyncOnMessageDo: aBlock usingClient: aClient withConfig: aConfig [
 	| result |
 	result := [ self syncOnMessageDo: aBlock usingClient: aClient withConfig: aConfig ] newProcess.
 	result priority: Processor systemBackgroundPriority.
@@ -72,7 +122,7 @@ EDAStompTopicListener >> asyncOnMessageDo: aBlock usingClient: aClient withConfi
 ]
 
 { #category : #initialization }
-EDAStompTopicListener >> buildClientWith: config [
+EDAAStompTopicListener >> buildClientWith: config [
 	| result |
 	result := StampClient new.
 	result login: config username.
@@ -84,22 +134,22 @@ EDAStompTopicListener >> buildClientWith: config [
 ]
 
 { #category : #accessing }
-EDAStompTopicListener >> buildIdUsingClient: aClient withConfig: config [
+EDAAStompTopicListener >> buildIdUsingClient: aClient withConfig: config [
 	^ aClient nextId , '-', config destination
 ]
 
 { #category : #accessing }
-EDAStompTopicListener >> client [
+EDAAStompTopicListener >> client [
 	^ client
 ]
 
 { #category : #accessing }
-EDAStompTopicListener >> client: aClient [
+EDAAStompTopicListener >> client: aClient [
 	client := aClient
 ]
 
 { #category : #lifecycle }
-EDAStompTopicListener >> close [
+EDAAStompTopicListener >> close [
 	[ self client close ]
 		on: StampError , PrimitiveFailed, ZnIncomplete
 		do: [ :ex |
@@ -113,66 +163,66 @@ EDAStompTopicListener >> close [
 ]
 
 { #category : #accessing }
-EDAStompTopicListener >> config [
+EDAAStompTopicListener >> config [
 	^ config
 ]
 
 { #category : #accessing }
-EDAStompTopicListener >> config: aConfig [
+EDAAStompTopicListener >> config: aConfig [
 	config := aConfig
 ]
 
 { #category : #lifecycle }
-EDAStompTopicListener >> forceUnsubscribe [
+EDAAStompTopicListener >> forceUnsubscribe [
 	self subscriptionId: nil
 ]
 
 { #category : #accessing }
-EDAStompTopicListener >> listenerProcess [
+EDAAStompTopicListener >> listenerProcess [
 	^ listenerProcess
 ]
 
 { #category : #accessing }
-EDAStompTopicListener >> listenerProcess: aProcess [
+EDAAStompTopicListener >> listenerProcess: aProcess [
 	listenerProcess := aProcess
 ]
 
 { #category : #initialization }
-EDAStompTopicListener >> logFinish: message usingClient: aClient withConfig: aConfig [
+EDAAStompTopicListener >> logFinish: message usingClient: aClient withConfig: aConfig [
 	self logInfoMessage: '<< Finished processing message: ', message greaseString , ' from ', aConfig queue greaseString , '.'
 ]
 
 { #category : #initialization }
-EDAStompTopicListener >> logInit: message usingClient: aClient withConfig: aConfig [
+EDAAStompTopicListener >> logInit: message usingClient: aClient withConfig: aConfig [
 	self logInfoMessage: '>> Processing incoming message: ', message greaseString , ' from ', aConfig queue greaseString , '.'
 
 ]
 
 { #category : #accessing }
-EDAStompTopicListener >> nextId [
+EDAAStompTopicListener >> nextId [
 	^ self buildIdUsingClient: self client withConfig: self config
 ]
 
 { #category : #lifecycle }
-EDAStompTopicListener >> onMessageDo: aBlock [
+EDAAStompTopicListener >> onMessageDo: aBlock [
 	self listenerProcess: (self asyncOnMessageDo: aBlock usingClient: self client withConfig: self config).
 	^ self listenerProcess
 ]
 
 { #category : #initialization }
-EDAStompTopicListener >> resetClient [
+EDAAStompTopicListener >> resetClient [
 	self client: (self buildClientWith: self config)
 ]
 
 { #category : #lifecycle }
-EDAStompTopicListener >> subscribe [
+EDAAStompTopicListener >> subscribe [
 	self subscriptionId: self nextId.
 	self subscribe: self subscriptionId usingClient: self client withConfig: self config.
 	^ self subscriptionId
 ]
 
 { #category : #lifecycle }
-EDAStompTopicListener >> subscribe: id usingClient: aClient withConfig: aConfig [
+EDAAStompTopicListener >> subscribe: id usingClient: aClient withConfig: aConfig [
 	| subscribeFrame ack |
 	aClient open.
 	subscribeFrame := StampSubscribeFrame new.
@@ -187,17 +237,17 @@ EDAStompTopicListener >> subscribe: id usingClient: aClient withConfig: aConfig 
 ]
 
 { #category : #accessing }
-EDAStompTopicListener >> subscriptionId [
+EDAAStompTopicListener >> subscriptionId [
 	^ subscriptionId
 ]
 
 { #category : #accessing }
-EDAStompTopicListener >> subscriptionId: val [
+EDAAStompTopicListener >> subscriptionId: val [
 	subscriptionId := val
 ]
 
 { #category : #enumerating }
-EDAStompTopicListener >> syncOnMessageDo: aBlock usingClient: aClient withConfig: conf [
+EDAAStompTopicListener >> syncOnMessageDo: aBlock usingClient: aClient withConfig: conf [
 	[ aClient
 		runWith: [ :message | 
 			| text |
@@ -282,12 +332,12 @@ EDAStompTopicListener >> syncOnMessageDo: aBlock usingClient: aClient withConfig
 ]
 
 { #category : #lifecycle }
-EDAStompTopicListener >> unsubscribe [
+EDAAStompTopicListener >> unsubscribe [
 	^ self unsubscribe: self subscriptionId usingClient: self client
 ]
 
 { #category : #lifecycle }
-EDAStompTopicListener >> unsubscribe: id usingClient: aClient [
+EDAAStompTopicListener >> unsubscribe: id usingClient: aClient [
 	| unsubscribeFrame |
 	listenerProcess
 		ifNotNil: [ listenerProcess terminate.

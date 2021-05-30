@@ -1,8 +1,8 @@
 Class {
-	#name : #EDAProjectionMongoRepository,
-	#superclass : #EDAProjectionVoyageRepository,
-	#traits : 'EDATMongoHelper',
-	#classTraits : 'EDATMongoHelper classTrait',
+	#name : #EDAAProjectionMongoRepository,
+	#superclass : #EDAAProjectionVoyageRepository,
+	#traits : 'EDACTMongoHelper',
+	#classTraits : 'EDACTMongoHelper classTrait',
 	#classInstVars : [
 		'username',
 		'password',
@@ -25,32 +25,32 @@ Class {
 }
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> authenticationMechanism [
+EDAAProjectionMongoRepository class >> authenticationMechanism [
 	^ authenticationMechanism
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> authenticationMechanism: anObject [
+EDAAProjectionMongoRepository class >> authenticationMechanism: anObject [
 	authenticationMechanism := anObject
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> databaseName [
+EDAAProjectionMongoRepository class >> databaseName [
 	^ databaseName
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> databaseName: val [
+EDAAProjectionMongoRepository class >> databaseName: val [
 	databaseName := val
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> debug [
+EDAAProjectionMongoRepository class >> debug [
 	^ debug
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> debug: aBoolean [
+EDAAProjectionMongoRepository class >> debug: aBoolean [
 	debug = aBoolean
 		ifTrue: [ ^ self ].
 	debug := aBoolean.
@@ -58,7 +58,7 @@ EDAProjectionMongoRepository class >> debug: aBoolean [
 ]
 
 { #category : #'class initialization' }
-EDAProjectionMongoRepository class >> doInitialize [
+EDAAProjectionMongoRepository class >> doInitialize [
 	self urls: nil.
 	self tls: nil.
 	self databaseName: nil.
@@ -75,12 +75,12 @@ EDAProjectionMongoRepository class >> doInitialize [
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> enableReplication [
+EDAAProjectionMongoRepository class >> enableReplication [
 	^ enableReplication
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> enableReplication: aBoolean [
+EDAAProjectionMongoRepository class >> enableReplication: aBoolean [
 	enableReplication = aBoolean
 		ifTrue: [ ^ self ].
 	enableReplication := aBoolean.
@@ -88,12 +88,12 @@ EDAProjectionMongoRepository class >> enableReplication: aBoolean [
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> enableSingleton [
+EDAAProjectionMongoRepository class >> enableSingleton [
 	^ enableSingleton
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> enableSingleton: aBoolean [
+EDAAProjectionMongoRepository class >> enableSingleton: aBoolean [
 	enableSingleton = aBoolean
 		ifTrue: [ ^ self ].
 	enableSingleton := aBoolean.
@@ -101,12 +101,12 @@ EDAProjectionMongoRepository class >> enableSingleton: aBoolean [
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> ensuringCurrentOnSave [
+EDAAProjectionMongoRepository class >> ensuringCurrentOnSave [
 	^ ensuringCurrentOnSave
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> ensuringCurrentOnSave: aBoolean [
+EDAAProjectionMongoRepository class >> ensuringCurrentOnSave: aBoolean [
 	ensuringCurrentOnSave = aBoolean
 		ifTrue: [ ^ self ].
 	ensuringCurrentOnSave := aBoolean.
@@ -114,12 +114,12 @@ EDAProjectionMongoRepository class >> ensuringCurrentOnSave: aBoolean [
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> ensuringCurrentReferencesOnQueries [
+EDAAProjectionMongoRepository class >> ensuringCurrentReferencesOnQueries [
 	^ ensuringCurrentReferencesOnQueries
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> ensuringCurrentReferencesOnQueries: aBoolean [
+EDAAProjectionMongoRepository class >> ensuringCurrentReferencesOnQueries: aBoolean [
 	ensuringCurrentReferencesOnQueries = aBoolean
 		ifTrue: [ ^ self ].
 	ensuringCurrentReferencesOnQueries := aBoolean.
@@ -127,12 +127,12 @@ EDAProjectionMongoRepository class >> ensuringCurrentReferencesOnQueries: aBoole
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> forceEager [
+EDAAProjectionMongoRepository class >> forceEager [
 	^ forceEager
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> forceEager: aBoolean [
+EDAAProjectionMongoRepository class >> forceEager: aBoolean [
 	forceEager = aBoolean
 		ifTrue: [ ^ self ].
 	forceEager := aBoolean.
@@ -140,17 +140,17 @@ EDAProjectionMongoRepository class >> forceEager: aBoolean [
 ]
 
 { #category : #'class initialization' }
-EDAProjectionMongoRepository class >> initialize [
+EDAAProjectionMongoRepository class >> initialize [
 	self doInitialize
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> lazySynchronize [
+EDAAProjectionMongoRepository class >> lazySynchronize [
 	^ lazySynchronize
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> lazySynchronize: aBoolean [
+EDAAProjectionMongoRepository class >> lazySynchronize: aBoolean [
 	lazySynchronize = aBoolean
 		ifTrue: [ ^ self ].
 	lazySynchronize := aBoolean.
@@ -158,22 +158,22 @@ EDAProjectionMongoRepository class >> lazySynchronize: aBoolean [
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> password [
+EDAAProjectionMongoRepository class >> password [
 	^ password
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> password: val [
+EDAAProjectionMongoRepository class >> password: val [
 	password := val
 ]
 
 { #category : #'refresh settings' }
-EDAProjectionMongoRepository class >> refreshVoyageSettings [
-	EDAVOProjectionMongoRepository allInstancesDo: [ :repo | self refreshVoyageSettingsOn: repo ]
+EDAAProjectionMongoRepository class >> refreshVoyageSettings [
+	EDAAVOProjectionMongoRepository allInstancesDo: [ :repo | self refreshVoyageSettingsOn: repo ]
 ]
 
 { #category : #'refresh settings' }
-EDAProjectionMongoRepository class >> refreshVoyageSettingsOn: aRepository [
+EDAAProjectionMongoRepository class >> refreshVoyageSettingsOn: aRepository [
 	aRepository username: self username.
 	aRepository password: self password.
 	aRepository debug: self debug.
@@ -190,42 +190,42 @@ EDAProjectionMongoRepository class >> refreshVoyageSettingsOn: aRepository [
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> tls [
+EDAAProjectionMongoRepository class >> tls [
 	^ tls
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> tls: aBoolean [
+EDAAProjectionMongoRepository class >> tls: aBoolean [
 	tls := aBoolean
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> urls [
+EDAAProjectionMongoRepository class >> urls [
 	^ urls
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> urls: aString [
+EDAAProjectionMongoRepository class >> urls: aString [
 	urls := aString
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> username [
+EDAAProjectionMongoRepository class >> username [
 	^ username
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> username: anObject [
+EDAAProjectionMongoRepository class >> username: anObject [
 	username := anObject
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> wireProtocolEnabled [
+EDAAProjectionMongoRepository class >> wireProtocolEnabled [
 	^ wireProtocolEnabled
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository class >> wireProtocolEnabled: aBoolean [
+EDAAProjectionMongoRepository class >> wireProtocolEnabled: aBoolean [
 	wireProtocolEnabled = aBoolean
 		ifTrue: [ ^ self ].
 	wireProtocolEnabled := aBoolean.
@@ -233,13 +233,13 @@ EDAProjectionMongoRepository class >> wireProtocolEnabled: aBoolean [
 ]
 
 { #category : #accessing }
-EDAProjectionMongoRepository >> configureAuthentication [
+EDAAProjectionMongoRepository >> configureAuthentication [
 	self flag: #TODO.	"Find out how to customize the authentication of the specific Mongo instance"
 	self class authenticationMechanism beDefault.
 
 ]
 
 { #category : #persistence }
-EDAProjectionMongoRepository >> mongoRepositoryClass [
-	^ EDAVOProjectionMongoRepository
+EDAAProjectionMongoRepository >> mongoRepositoryClass [
+	^ EDAAVOProjectionMongoRepository
 ]

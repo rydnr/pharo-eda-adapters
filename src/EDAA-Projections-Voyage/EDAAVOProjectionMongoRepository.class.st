@@ -1,16 +1,16 @@
 Class {
-	#name : #EDAVOProjectionMongoRepository,
+	#name : #EDAAVOProjectionMongoRepository,
 	#superclass : #VOMongoRepository,
 	#category : #'EDAA-Projections-Voyage'
 }
 
 { #category : #persistence }
-EDAVOProjectionMongoRepository >> collectionNameFor: aClass [
+EDAAVOProjectionMongoRepository >> collectionNameFor: aClass [
 	^ aClass voyageCollectionName
 ]
 
 { #category : #persistence }
-EDAVOProjectionMongoRepository >> findAllProjections: aClass ofTenant: aTenant [
+EDAAVOProjectionMongoRepository >> findAllProjections: aClass ofTenant: aTenant [
 	| criteria |
 	criteria := Dictionary new.
 	criteria at: 'tenant' put: aTenant.
@@ -24,7 +24,7 @@ EDAVOProjectionMongoRepository >> findAllProjections: aClass ofTenant: aTenant [
 ]
 
 { #category : #persistence }
-EDAVOProjectionMongoRepository >> selectMany: aClass where: aBlock sortBy: sortBlock [
+EDAAVOProjectionMongoRepository >> selectMany: aClass where: aBlock sortBy: sortBlock [
 	^ self selectManyOperation
 		queryClass: aClass;
 		where: aBlock;

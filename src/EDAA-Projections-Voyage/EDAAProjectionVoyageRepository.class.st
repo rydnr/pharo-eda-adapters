@@ -1,5 +1,5 @@
 Class {
-	#name : #EDAProjectionVoyageRepository,
+	#name : #EDAAProjectionVoyageRepository,
 	#superclass : #EDAProjectionRepository,
 	#instVars : [
 		'repository'
@@ -8,12 +8,12 @@ Class {
 }
 
 { #category : #'class initialization' }
-EDAProjectionVoyageRepository >> doInitialize [
+EDAAProjectionVoyageRepository >> doInitialize [
 	self repository: self initBackendRepository
 ]
 
 { #category : #persistence }
-EDAProjectionVoyageRepository >> findAllOfTenant: aTenant [
+EDAAProjectionVoyageRepository >> findAllOfTenant: aTenant [
 	| criteria |
 	criteria := Dictionary new.
 	criteria at: 'tenant' put: aTenant.
@@ -21,43 +21,43 @@ EDAProjectionVoyageRepository >> findAllOfTenant: aTenant [
 ]
 
 { #category : #persistence }
-EDAProjectionVoyageRepository >> initBackendRepository [
+EDAAProjectionVoyageRepository >> initBackendRepository [
 	self subclassResponsibility 
 ]
 
 { #category : #'class initialization' }
-EDAProjectionVoyageRepository >> initialize [
+EDAAProjectionVoyageRepository >> initialize [
 	super initialize.
 	self doInitialize
 ]
 
 { #category : #persistence }
-EDAProjectionVoyageRepository >> removeProjection: aProjectionClass [
+EDAAProjectionVoyageRepository >> removeProjection: aProjectionClass [
 	repository removeAll: aProjectionClass
 ]
 
 { #category : #accessing }
-EDAProjectionVoyageRepository >> repository [
+EDAAProjectionVoyageRepository >> repository [
 	^ repository
 ]
 
 { #category : #accessing }
-EDAProjectionVoyageRepository >> repository: aRepository [
+EDAAProjectionVoyageRepository >> repository: aRepository [
 	repository := aRepository
 ]
 
 { #category : #persistence }
-EDAProjectionVoyageRepository >> save: aProjection [
+EDAAProjectionVoyageRepository >> save: aProjection [
 	aProjection save
 ]
 
 { #category : #persistence }
-EDAProjectionVoyageRepository >> selectMany: aProjectionClass where: aDictionary [
+EDAAProjectionVoyageRepository >> selectMany: aProjectionClass where: aDictionary [
 	^ aProjectionClass selectMany: aDictionary.
 ]
 
 { #category : #persistence }
-EDAProjectionVoyageRepository >> selectOfTenant: aTenant many: aProjectionClass where: aDictionary [
+EDAAProjectionVoyageRepository >> selectOfTenant: aTenant many: aProjectionClass where: aDictionary [
 	| criteria |
 	criteria := Dictionary newFrom: aDictionary.
 	criteria at: 'tenant' put: aTenant.
@@ -65,7 +65,7 @@ EDAProjectionVoyageRepository >> selectOfTenant: aTenant many: aProjectionClass 
 ]
 
 { #category : #persistence }
-EDAProjectionVoyageRepository >> selectOfTenant: aTenant one: aProjectionClass where: aDictionary [
+EDAAProjectionVoyageRepository >> selectOfTenant: aTenant one: aProjectionClass where: aDictionary [
 	| criteria |
 	criteria := Dictionary newFrom: aDictionary.
 	criteria at: 'tenant' put: aTenant.
@@ -73,6 +73,6 @@ EDAProjectionVoyageRepository >> selectOfTenant: aTenant one: aProjectionClass w
 ]
 
 { #category : #persistence }
-EDAProjectionVoyageRepository >> selectOne: aProjectionClass where: aDictionary [
+EDAAProjectionVoyageRepository >> selectOne: aProjectionClass where: aDictionary [
 	^ aProjectionClass selectOne: aDictionary
 ]

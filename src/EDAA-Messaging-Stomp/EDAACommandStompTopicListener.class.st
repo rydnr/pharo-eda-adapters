@@ -8,7 +8,7 @@ A EDAStompTopicListener specific for receiving EDA commands.
 Manage how to listen to incoming commands, while acting as the configuration container for the EDA command queue.
 "
 Class {
-	#name : #EDACommandStompTopicListener,
-	#superclass : #EDAStompTopicListener,
+	#name : #EDAACommandStompTopicListener,
+	#superclass : #EDAAStompTopicListener,
 	#category : #'EDAA-Messaging-Stomp'
 }

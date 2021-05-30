@@ -1,23 +1,23 @@
 Class {
-	#name : #EDAProjectionMemoryRepository,
-	#superclass : #EDAProjectionVoyageRepository,
+	#name : #EDAAProjectionMemoryRepository,
+	#superclass : #EDAAProjectionVoyageRepository,
 	#category : #'EDAA-Projections-Voyage'
 }
 
 { #category : #accessing }
-EDAProjectionMemoryRepository >> configureAuthentication [
+EDAAProjectionMemoryRepository >> configureAuthentication [
 
 ]
 
 { #category : #persistence }
-EDAProjectionMemoryRepository >> convertDictonaryToConditionalBlock: aDictionary [
+EDAAProjectionMemoryRepository >> convertDictonaryToConditionalBlock: aDictionary [
 	| aBlock |
 	aBlock := [ :each | aDictionary associations allSatisfy: [ :association | (each perform: association key asSymbol) = association value ] ].
 	^ aBlock
 ]
 
 { #category : #persistence }
-EDAProjectionMemoryRepository >> initBackendRepository [
+EDAAProjectionMemoryRepository >> initBackendRepository [
 	| result |
 	result := VOMemoryRepository new.
 	result enableSingleton.
@@ -25,11 +25,11 @@ EDAProjectionMemoryRepository >> initBackendRepository [
 ]
 
 { #category : #persistence }
-EDAProjectionMemoryRepository >> selectMany: aProjectionClass where: aDictionary [
+EDAAProjectionMemoryRepository >> selectMany: aProjectionClass where: aDictionary [
 	^ aProjectionClass selectMany: (self convertDictonaryToConditionalBlock: aDictionary)
 ]
 
 { #category : #persistence }
-EDAProjectionMemoryRepository >> selectOne: aProjectionClass where: aDictionary [
+EDAAProjectionMemoryRepository >> selectOne: aProjectionClass where: aDictionary [
 	^ aProjectionClass selectOne: (self convertDictonaryToConditionalBlock: aDictionary)
 ]

@@ -8,10 +8,10 @@ Communicates with Stomp exchanges to publish messages.
 Contains the configuration needed to publish messages to exchanges.
 "
 Class {
-	#name : #EDAStompTopicPublisher,
+	#name : #EDAAStompTopicPublisher,
 	#superclass : #EDATopicPublisher,
-	#traits : 'EDATLogging',
-	#classTraits : 'EDATLogging classTrait',
+	#traits : 'EDACTLogging',
+	#classTraits : 'EDACTLogging classTrait',
 	#instVars : [
 		'client'
 	],
@@ -30,8 +30,58 @@ Class {
 	#category : #'EDAA-Messaging-Stomp'
 }
 
+{ #category : #logging }
+EDAAStompTopicPublisher class >> logDebugMessage: aMessage beautify: aBoolean [
+	EDACLoggingSettings debugEnabled
+		ifTrue: [ self
+				logMessage: aMessage
+				inCategory: 'DEBUG'
+				inStream: self defaultStream
+				beautify: aBoolean ]
+]
+
+{ #category : #logging }
+EDAAStompTopicPublisher class >> logErrorMessage: aMessage beautify: aBoolean [
+	EDACLoggingSettings errorEnabled
+		ifTrue: [ self
+				logMessage: aMessage
+				inCategory: 'ERROR'
+				inStream: self defaultStream
+				beautify: aBoolean ]
+]
+
+{ #category : #logging }
+EDAAStompTopicPublisher class >> logInfoMessage: aMessage beautify: aBoolean [
+	EDACLoggingSettings infoEnabled
+		ifTrue: [ self
+				logMessage: aMessage
+				inCategory: 'INFO '
+				inStream: self defaultStream
+				beautify: aBoolean ]
+]
+
+{ #category : #logging }
+EDAAStompTopicPublisher class >> logTraceMessage: aMessage beautify: aBoolean [
+	EDACLoggingSettings traceEnabled
+		ifTrue: [ self
+				logMessage: aMessage
+				inCategory: 'TRACE'
+				inStream: self defaultStream
+				beautify: aBoolean ]
+]
+
+{ #category : #logging }
+EDAAStompTopicPublisher class >> logWarningMessage: aMessage beautify: aBoolean [
+	^ EDACLoggingSettings warningEnabled
+		ifTrue: [ self
+				logMessage: aMessage
+				inCategory: 'WARN '
+				inStream: self defaultStream
+				beautify: aBoolean ]
+]
+
 { #category : #'instance creation' }
-EDAStompTopicPublisher class >> withConfig: aConfig [
+EDAAStompTopicPublisher class >> withConfig: aConfig [
 	| result |
 	result := self new.
 	result config: aConfig.
@@ -40,7 +90,7 @@ EDAStompTopicPublisher class >> withConfig: aConfig [
 ]
 
 { #category : #initialization }
-EDAStompTopicPublisher >> buildClientWith: config [
+EDAAStompTopicPublisher >> buildClientWith: config [
 	| result |
 	result := StampClient new.
 	result login: config username.
@@ -53,44 +103,44 @@ EDAStompTopicPublisher >> buildClientWith: config [
 ]
 
 { #category : #private }
-EDAStompTopicPublisher >> buildIdUsingClient: aClient withConfig: config [
+EDAAStompTopicPublisher >> buildIdUsingClient: aClient withConfig: config [
 	^ aClient nextId , '-', config exchange, config routingKey
 ]
 
 { #category : #accessing }
-EDAStompTopicPublisher >> client [
+EDAAStompTopicPublisher >> client [
 	^ client
 ]
 
 { #category : #accessing }
-EDAStompTopicPublisher >> client: val [
+EDAAStompTopicPublisher >> client: val [
 	client := val
 ]
 
 { #category : #accessing }
-EDAStompTopicPublisher >> destination [
+EDAAStompTopicPublisher >> destination [
 	^ self destinationWithRoutingKey: self routingKey
 ]
 
 { #category : #accessing }
-EDAStompTopicPublisher >> destinationWithRoutingKey: key [
+EDAAStompTopicPublisher >> destinationWithRoutingKey: key [
 	^ '/exchange/', self exchange, '/', key
 ]
 
 { #category : #accessing }
-EDAStompTopicPublisher >> errorDestination [
+EDAAStompTopicPublisher >> errorDestination [
 	^ '/exchange/' , self errorExchange , '/#'
 ]
 
 { #category : #initialization }
-EDAStompTopicPublisher >> initialize [
+EDAAStompTopicPublisher >> initialize [
 	super initialize.
 	self client: (self buildClientWith: self class)
 
 ]
 
 { #category : #logging }
-EDAStompTopicPublisher >> logMessagePublished: message usingClient: aClient on: aDestination [
+EDAAStompTopicPublisher >> logMessagePublished: message usingClient: aClient on: aDestination [
 	self
 		logInfoMessage:
 			'Published message ' , message greaseString , ' in '
@@ -98,18 +148,18 @@ EDAStompTopicPublisher >> logMessagePublished: message usingClient: aClient on: 
 ]
 
 { #category : #logging }
-EDAStompTopicPublisher >> logPublishingMessage: message usingClient: aClient on: aDestination [
+EDAAStompTopicPublisher >> logPublishingMessage: message usingClient: aClient on: aDestination [
 	self
 		logInfoMessage: 'Publishing message in ' , aDestination greaseString , '.'
 ]
 
 { #category : #private }
-EDAStompTopicPublisher >> nextId [
+EDAAStompTopicPublisher >> nextId [
 	^ self buildIdUsingClient: self client withConfig: self class
 ]
 
 { #category : #API }
-EDAStompTopicPublisher >> publishError: aMessage [
+EDAAStompTopicPublisher >> publishError: aMessage [
 	^ self
 		publishError: true
 		message: aMessage
@@ -118,7 +168,7 @@ EDAStompTopicPublisher >> publishError: aMessage [
 ]
 
 { #category : #API }
-EDAStompTopicPublisher >> publishError: isError message: aMessage usingClient: aClient withConfig: config [
+EDAAStompTopicPublisher >> publishError: isError message: aMessage usingClient: aClient withConfig: config [
 	| sendFrame destination |
 	destination := isError
 		ifTrue: [ config errorDestination ]
@@ -143,7 +193,7 @@ EDAStompTopicPublisher >> publishError: isError message: aMessage usingClient: a
 ]
 
 { #category : #API }
-EDAStompTopicPublisher >> publishMessage: aMessage [
+EDAAStompTopicPublisher >> publishMessage: aMessage [
 	^ self
 		publishError: false message: aMessage
 		usingClient: self client
@@ -151,12 +201,12 @@ EDAStompTopicPublisher >> publishMessage: aMessage [
 ]
 
 { #category : #API }
-EDAStompTopicPublisher >> publishMessage: aMessage inTransaction: transactionId [
+EDAAStompTopicPublisher >> publishMessage: aMessage inTransaction: transactionId [
 	^ self publishMessage: aMessage inTransaction: transactionId usingClient: self client withConfig: self class
 ]
 
 { #category : #API }
-EDAStompTopicPublisher >> publishMessage: aMessage inTransaction: transactionId usingClient: aClient withConfig: config [
+EDAAStompTopicPublisher >> publishMessage: aMessage inTransaction: transactionId usingClient: aClient withConfig: config [
 	| sendFrame destination |
 	self
 		logPublishingMessage: aMessage
@@ -177,12 +227,12 @@ EDAStompTopicPublisher >> publishMessage: aMessage inTransaction: transactionId 
 ]
 
 { #category : #API }
-EDAStompTopicPublisher >> publishMessage: aMessage withRoutingKey: aRoutingKeyString [
+EDAAStompTopicPublisher >> publishMessage: aMessage withRoutingKey: aRoutingKeyString [
 	^ self publishMessage: aMessage withRoutingKey: aRoutingKeyString usingClient: self client withConfig: self class
 ]
 
 { #category : #API }
-EDAStompTopicPublisher >> publishMessage: aMessage withRoutingKey: aRoutingKeyString usingClient: aClient withConfig: config [
+EDAAStompTopicPublisher >> publishMessage: aMessage withRoutingKey: aRoutingKeyString usingClient: aClient withConfig: config [
 	| sendFrame destination |
 	destination := config destinationWithRoutingKey: aRoutingKeyString.
 	self
@@ -204,7 +254,7 @@ EDAStompTopicPublisher >> publishMessage: aMessage withRoutingKey: aRoutingKeySt
 ]
 
 { #category : #API }
-EDAStompTopicPublisher >> publishMessages: messageCollection inTransaction: transactionId usingClient: aClient withConfig: config [
+EDAAStompTopicPublisher >> publishMessages: messageCollection inTransaction: transactionId usingClient: aClient withConfig: config [
 	| beginFrame commitFrame |
 	aClient isConnected
 		ifFalse: [ aClient open ].
@@ -224,6 +274,6 @@ EDAStompTopicPublisher >> publishMessages: messageCollection inTransaction: tran
 ]
 
 { #category : #API }
-EDAStompTopicPublisher >> publishMessagesAtomically: messageCollection [
+EDAAStompTopicPublisher >> publishMessagesAtomically: messageCollection [
 	^ self publishMessages: messageCollection inTransaction: self nextId usingClient: self client withConfig
 ]

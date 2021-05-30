@@ -8,29 +8,29 @@ Responsibility:
 It's used to publish events reflecting changes in aggregate roots upon receiving input commands.
 "
 Class {
-	#name : #EDAEventStompTopicPublisher,
-	#superclass : #EDAStompTopicPublisher,
+	#name : #EDAAEventStompTopicPublisher,
+	#superclass : #EDAAStompTopicPublisher,
 	#category : #'EDAA-Messaging-Stomp'
 }
 
 { #category : #API }
-EDAEventStompTopicPublisher >> publishEvent: anEvent [
+EDAAEventStompTopicPublisher >> publishEvent: anEvent [
 	^ self publishMessage: anEvent
 ]
 
 { #category : #API }
-EDAEventStompTopicPublisher >> publishEvent: anEvent inTransaction: id [
+EDAAEventStompTopicPublisher >> publishEvent: anEvent inTransaction: id [
 	^ self publishMessage: anEvent inTransaction: id
 
 ]
 
 { #category : #API }
-EDAEventStompTopicPublisher >> publishEvent: anEvent withRoutingKey: route [
+EDAAEventStompTopicPublisher >> publishEvent: anEvent withRoutingKey: route [
 	^ self publishMessage: anEvent withRoutingKey: route
 
 ]
 
 { #category : #API }
-EDAEventStompTopicPublisher >> publishEventsAtomically: eventCollection [
+EDAAEventStompTopicPublisher >> publishEventsAtomically: eventCollection [
 	^ self publishMessagesAtomically: eventCollection
 ]
