@@ -22,8 +22,9 @@ BaselineOfPharoEDAAdapters >> declareGroupsIn: spec [
 	spec
 		group: 'core'
 			with:
-			#(#'EDAA-EventStore-InMemory' #'EDAA-EventStore-Voyage' #'EDAA-Messaging-Stomp' #'EDAA-Projections-Voyage' #'EDAA-SMTP');
-		group: 'default' with: #('core')
+			#(#'EDAA-Domain' #'EDAA-EventStore-InMemory' #'EDAA-EventStore-Voyage' #'EDAA-Messaging-Stomp' #'EDAA-Projections-Voyage' #'EDAA-SMTP');
+		group: 'tests' with: #(#'EDAA-Domain-Tests');
+		group: 'default' with: #('core' 'tests')
 ]
 
 { #category : #meta }
