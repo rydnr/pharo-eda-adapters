@@ -1,6 +1,6 @@
 Class {
 	#name : #EDAAMongoEventStore,
-	#superclass : #EDAEventStore,
+	#superclass : #EDAPEventStore,
 	#traits : 'EDACTPrintOnHelper + EDACTMongoHelper',
 	#classTraits : 'EDACTPrintOnHelper classTrait + EDACTMongoHelper classTrait',
 	#classInstVars : [

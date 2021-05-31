@@ -1,6 +1,6 @@
 Class {
 	#name : #EDAAMemoryEventStore,
-	#superclass : #EDAEventStore,
+	#superclass : #EDAPEventStore,
 	#category : #'EDAA-EventStore-InMemory'
 }
 
