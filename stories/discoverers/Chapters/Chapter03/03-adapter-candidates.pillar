@@ -461,14 +461,14 @@ Using adapter names as keys is a valid approach, but it's not enough for us:
 
 Metacello new repository: 'github://osoco/pharo-eda-sample-app:main'; baseline: #PharoEDASampleApp; load
 
-EDALogEvent (EDAEventNotProjected)
+EDALogEvent (EDAEventNotProjected) -> pharo-eda-api
 EDAEventStore
 EDAEventSourcingEvent
 
 EDATopicPublisher
 EDATopicListener
 
-DUEnvironment (EDADUEnvironment)
+DUEnvironment (EDADUEnvironment) -> pharo-eda
 
 EDAStompTopicListener (EDAEventStompTopicListener)
 EDAStompTopicPublisher (EDACommandStompTopicPublisher)
