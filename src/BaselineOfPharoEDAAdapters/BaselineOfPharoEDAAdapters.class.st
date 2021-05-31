@@ -11,6 +11,7 @@ BaselineOfPharoEDAAdapters >> baseline: spec [
 		for: #common
 		do: [ spec blessing: #baseline.
 			self includePharoEDACommon: spec.
+			self includePharoEDAPorts: spec.
 			self includeStamp: spec.
 			self includeVoyage: spec.
 			self declarePackagesIn: spec.
@@ -31,17 +32,17 @@ BaselineOfPharoEDAAdapters >> declareGroupsIn: spec [
 BaselineOfPharoEDAAdapters >> declarePackagesIn: spec [
 	spec
 		package: #'EDAA-Domain'
-			with: [ spec requires: #('PharoEDACommon') ];
+			with: [ spec requires: #('PharoEDACommon' 'PharoEDAPorts') ];
 		package: #'EDAA-Domain-Tests'
 			with: [ spec requires: #('EDAA-Domain') ];
 		package: #'EDAA-EventStore-InMemory'
-			with: [ spec requires: #('PharoEDACommon') ];
+			with: [ spec requires: #('PharoEDACommon' 'PharoEDAPorts') ];
 		package: #'EDAA-EventStore-Voyage'
-			with: [ spec requires: #('Voyage' 'PharoEDACommon') ];
+			with: [ spec requires: #('Voyage' 'PharoEDACommon' 'PharoEDAPorts') ];
 		package: #'EDAA-Messaging-Stomp'
-			with: [ spec requires: #('Stamp' 'PharoEDACommon') ];
+			with: [ spec requires: #('Stamp' 'PharoEDACommon' 'PharoEDAPorts') ];
 		package: #'EDAA-Projections-Voyage'
-			with: [ spec requires: #('Voyage' 'PharoEDACommon') ];
+			with: [ spec requires: #('Voyage' 'PharoEDACommon' 'PharoEDAPorts') ];
 		package: #'EDAA-SMTP' with: [ spec requires: #('PharoEDACommon') ]
 ]
 
@@ -60,6 +61,14 @@ BaselineOfPharoEDAAdapters >> includePharoEDACommon: spec [
 	spec
 		baseline: 'PharoEDACommon'
 		with: [ spec repository: 'github://osoco/pharo-eda-common:main' ].
+	^ spec
+]
+
+{ #category : #dependencies }
+BaselineOfPharoEDAAdapters >> includePharoEDAPorts: spec [
+	spec
+		baseline: 'PharoEDAPorts'
+		with: [ spec repository: 'github://osoco/pharo-eda-ports:main' ].
 	^ spec
 ]
 
