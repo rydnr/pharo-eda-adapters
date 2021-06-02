@@ -461,9 +461,12 @@ Using adapter names as keys is a valid approach, but it's not enough for us:
 
 Metacello new repository: 'github://osoco/pharo-eda-sample-app:main'; baseline: #PharoEDASampleApp; load
 
-EDALogEvent (EDAEventNotProjected) -> pharo-eda-api
-EDAEventStore
-EDAEventSourcingEvent
+This package depends on the following classes:
+  OID
+  BSON
+You must resolve these dependencies before you will be able to load these definitions:
+  BSON>>#nextOIDPut:
+  OID>>#initialize
 
 EDATopicPublisher
 EDATopicListener
@@ -474,65 +477,6 @@ EDAStompTopicListener (EDAEventStompTopicListener)
 EDAStompTopicPublisher (EDACommandStompTopicPublisher)
 
 EDAAVOMongoRepository -> EDAPrintOnHelper
-
-This package depends on the following classes:
-  EDAEventStore
-You must resolve these dependencies before you will be able to load these definitions:
-  EDAAMemoryEventStore
-  EDAAMemoryEventStore>>#allEvents
-  EDAAMemoryEventStore>>#findEventsOfTenant:ofAggregate:whereCriteria:
-  EDAAMemoryEventStore>>#findEventsOfTenant:ofAggregate:whereId:
-  EDAAMemoryEventStore>>#initBackendRepository
-  EDAAMemoryEventStore>>#saveEvents:
-
-
-This package depends on the following classes:
-  EDAEventStore
-  EDAEventSourcingEvent
-You must resolve these dependencies before you will be able to load these definitions:
-  EDAAMongoEventStore
-  EDAAMongoEventStore>>#authenticationMechanism
-  EDAAMongoEventStore>>#authenticationMechanism:
-  EDAAMongoEventStore>>#databaseName
-  EDAAMongoEventStore>>#databaseName:
-  EDAAMongoEventStore>>#debug
-  EDAAMongoEventStore>>#debug:
-  EDAAMongoEventStore>>#doInitialize
-  EDAAMongoEventStore>>#enableReplication
-  EDAAMongoEventStore>>#enableReplication:
-  EDAAMongoEventStore>>#enableSingleton
-  EDAAMongoEventStore>>#enableSingleton:
-  EDAAMongoEventStore>>#ensuringCurrentOnSave
-  EDAAMongoEventStore>>#ensuringCurrentOnSave:
-  EDAAMongoEventStore>>#ensuringCurrentReferencesOnQueries
-  EDAAMongoEventStore>>#ensuringCurrentReferencesOnQueries:
-  EDAAMongoEventStore>>#forceEager
-  EDAAMongoEventStore>>#forceEager:
-  EDAAMongoEventStore>>#initialize
-  EDAAMongoEventStore>>#lazySynchronize
-  EDAAMongoEventStore>>#lazySynchronize:
-  EDAAMongoEventStore>>#password
-  EDAAMongoEventStore>>#password:
-  EDAAMongoEventStore>>#refreshVoyageSettings
-  EDAAMongoEventStore>>#refreshVoyageSettingsOn:
-  EDAAMongoEventStore>>#tls
-  EDAAMongoEventStore>>#tls:
-  EDAAMongoEventStore>>#urls
-  EDAAMongoEventStore>>#urls:
-  EDAAMongoEventStore>>#username
-  EDAAMongoEventStore>>#username:
-  EDAAMongoEventStore>>#wireProtocolEnabled
-  EDAAMongoEventStore>>#wireProtocolEnabled:
-  EDAAMongoEventStore>>#allEventsOfTenant:
-  EDAAMongoEventStore>>#findEventsOfTenant:ofAggregate:whereCriteria:
-  EDAAMongoEventStore>>#findEventsOfTenant:ofAggregate:whereId:
-  EDAAMongoEventStore>>#initBackendRepository
-  EDAAMongoEventStore>>#mongoRepositoryClass
-  EDAAMongoEventStore>>#saveEvents:
-  EDAEventSourcingEvent>>#isVoyageRoot
-  EDAEventSourcingEvent>>#voyageRepository
-  EDAEventSourcingEvent>>#voyageRepository:
-
 
 This package depends on the following classes:
   EDATopicPublisher

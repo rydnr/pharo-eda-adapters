@@ -1,7 +1,7 @@
 "
-* Class: EDACommandStompTopicListener 
+* Class: EDAACommandStompTopicListener
 
-A EDAStompTopicListener specific for receiving EDA commands.
+A EDAAStompTopicListener specific for receiving EDA commands.
 
 * Responsibility: 
 
