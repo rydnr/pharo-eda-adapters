@@ -459,6 +459,11 @@ Using adapter names as keys is a valid approach, but it's not enough for us:
 - it's not flexible,
 - it doesn't support current PharoEDA configuration files.
 
+
+
+
+-----
+
 Metacello new repository: 'github://osoco/pharo-eda-sample-app:main'; baseline: #PharoEDASampleApp; load
 
 This package depends on the following classes:
@@ -468,87 +473,8 @@ You must resolve these dependencies before you will be able to load these defini
   BSON>>#nextOIDPut:
   OID>>#initialize
 
-EDATopicPublisher
-EDATopicListener
-
 DUEnvironment (EDADUEnvironment) -> pharo-eda
 
-EDAStompTopicListener (EDAEventStompTopicListener)
-EDAStompTopicPublisher (EDACommandStompTopicPublisher)
-
-EDAAVOMongoRepository -> EDAPrintOnHelper
-
-This package depends on the following classes:
-  EDATopicPublisher
-  EDATopicListener
-You must resolve these dependencies before you will be able to load these definitions:
-  EDAACommandStompTopicListener
-  EDAAEventStompTopicPublisher
-  EDAAEventStompTopicPublisher>>#publishEvent:
-  EDAAEventStompTopicPublisher>>#publishEvent:inTransaction:
-  EDAAEventStompTopicPublisher>>#publishEvent:withRoutingKey:
-  EDAAEventStompTopicPublisher>>#publishEventsAtomically:
-  EDAAStompTopicListener
-  EDAAStompTopicListener>>#logDebugMessage:beautify:
-  EDAAStompTopicListener>>#logErrorMessage:beautify:
-  EDAAStompTopicListener>>#logFinish:usingClient:withConfig:
-  EDAAStompTopicListener>>#logInfoMessage:beautify:
-  EDAAStompTopicListener>>#logReceivingMessage:usingClient:from:
-  EDAAStompTopicListener>>#logTraceMessage:beautify:
-  EDAAStompTopicListener>>#logWarningMessage:beautify:
-  EDAAStompTopicListener>>#withConfig:
-  EDAAStompTopicListener>>#asyncOnMessageDo:usingClient:withConfig:
-  EDAAStompTopicListener>>#buildClientWith:
-  EDAAStompTopicListener>>#buildIdUsingClient:withConfig:
-  EDAAStompTopicListener>>#client
-  EDAAStompTopicListener>>#client:
-  EDAAStompTopicListener>>#close
-  EDAAStompTopicListener>>#config
-  EDAAStompTopicListener>>#config:
-  EDAAStompTopicListener>>#forceUnsubscribe
-  EDAAStompTopicListener>>#listenerProcess
-  EDAAStompTopicListener>>#listenerProcess:
-  EDAAStompTopicListener>>#logFinish:usingClient:withConfig:
-  EDAAStompTopicListener>>#logInit:usingClient:withConfig:
-  EDAAStompTopicListener>>#nextId
-  EDAAStompTopicListener>>#onMessageDo:
-  EDAAStompTopicListener>>#resetClient
-  EDAAStompTopicListener>>#subscribe
-  EDAAStompTopicListener>>#subscribe:usingClient:withConfig:
-  EDAAStompTopicListener>>#subscriptionId
-  EDAAStompTopicListener>>#subscriptionId:
-  EDAAStompTopicListener>>#syncOnMessageDo:usingClient:withConfig:
-  EDAAStompTopicListener>>#unsubscribe
-  EDAAStompTopicListener>>#unsubscribe:usingClient:
-  EDAAStompTopicPublisher
-  EDAAStompTopicPublisher>>#logDebugMessage:beautify:
-  EDAAStompTopicPublisher>>#logErrorMessage:beautify:
-  EDAAStompTopicPublisher>>#logInfoMessage:beautify:
-  EDAAStompTopicPublisher>>#logTraceMessage:beautify:
-  EDAAStompTopicPublisher>>#logWarningMessage:beautify:
-  EDAAStompTopicPublisher>>#withConfig:
-  EDAAStompTopicPublisher>>#buildClientWith:
-  EDAAStompTopicPublisher>>#buildIdUsingClient:withConfig:
-  EDAAStompTopicPublisher>>#client
-  EDAAStompTopicPublisher>>#client:
-  EDAAStompTopicPublisher>>#destination
-  EDAAStompTopicPublisher>>#destinationWithRoutingKey:
-  EDAAStompTopicPublisher>>#errorDestination
-  EDAAStompTopicPublisher>>#initialize
-  EDAAStompTopicPublisher>>#logMessagePublished:usingClient:on:
-  EDAAStompTopicPublisher>>#logPublishingMessage:usingClient:on:
-  EDAAStompTopicPublisher>>#nextId
-  EDAAStompTopicPublisher>>#publishError:
-  EDAAStompTopicPublisher>>#publishError:message:usingClient:withConfig:
-  EDAAStompTopicPublisher>>#publishMessage:
-  EDAAStompTopicPublisher>>#publishMessage:inTransaction:
-  EDAAStompTopicPublisher>>#publishMessage:inTransaction:usingClient:withConfig:
-  EDAAStompTopicPublisher>>#publishMessage:withRoutingKey:
-  EDAAStompTopicPublisher>>#publishMessage:withRoutingKey:usingClient:withConfig:
-  EDAAStompTopicPublisher>>#publishMessages:inTransaction:usingClient:withConfig:
-  EDAAStompTopicPublisher>>#publishMessagesAtomically:
-
-* EDAEventStore -> EDAPrintOnHelper (en 'EDA-EventStore')
 
 !!! EDA-Application fails:
 This package depends on the following classes:

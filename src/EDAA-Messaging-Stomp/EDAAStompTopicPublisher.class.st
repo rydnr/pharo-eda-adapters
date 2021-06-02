@@ -10,8 +10,8 @@ Contains the configuration needed to publish messages to exchanges.
 Class {
 	#name : #EDAAStompTopicPublisher,
 	#superclass : #EDATopicPublisher,
-	#traits : 'EDACTLogging',
-	#classTraits : 'EDACTLogging classTrait',
+	#traits : 'EDACLogging',
+	#classTraits : 'EDACLogging classTrait',
 	#instVars : [
 		'client'
 	],

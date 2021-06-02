@@ -1,8 +1,8 @@
 Class {
 	#name : #EDAAProjectionMongoRepository,
 	#superclass : #EDAAProjectionVoyageRepository,
-	#traits : 'EDACTMongoHelper',
-	#classTraits : 'EDACTMongoHelper classTrait',
+	#traits : 'EDACMongoHelper',
+	#classTraits : 'EDACMongoHelper classTrait',
 	#classInstVars : [
 		'username',
 		'password',

@@ -1,14 +1,14 @@
 Class {
 	#name : #EDAAVOMongoRepository,
 	#superclass : #VOMongoRepository,
-	#traits : 'EDACTPrintOnHelper',
-	#classTraits : 'EDACTPrintOnHelper classTrait',
+	#traits : 'EDACPrintOnHelper',
+	#classTraits : 'EDACPrintOnHelper classTrait',
 	#category : #'EDAA-EventStore-Voyage'
 }
 
 { #category : #voyage }
 EDAAVOMongoRepository class >> voyageCollectionName [
-	^ 'EventSourcingEvent'
+	^ 'EDAEventSourcingEvent'
 ]
 
 { #category : #voyage }
