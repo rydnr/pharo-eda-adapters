@@ -6,6 +6,14 @@ Class {
 	#category : #'EDAA-Domain-Tests'
 }
 
+{ #category : #annotations }
+EDAACandidateTest class >> classSideArbitraryKey [
+	"Maps 'classSideArbitraryKey' to #EDAAMemoryventStore"
+
+	<edaAdapterClass: #EDAAMemoryEventStore>
+	^ self
+]
+
 { #category : #tests }
 EDAACandidateTest >> arbitraryKey [
 	"Maps 'arbitraryKey' to #EDAAMongoEventStore"
@@ -26,7 +34,9 @@ EDAACandidateTest >> testAdapterClassAsCandidateKey [
 EDAACandidateTest >> testAdapterClassFromPragma [
 	| candidate |
 	candidate := EDAACandidate withKey: 'arbitraryKey' value: nil.
-	self assert: candidate adapterClass equals: #EDAAMongoEventStore
+	self assert: candidate adapterClass equals: #EDAAMongoEventStore.
+	candidate := EDAACandidate withKey: 'classSideArbitraryKey' value: nil.
+	self assert: candidate adapterClass equals: #EDAAMemoryEventStore
 ]
 
 { #category : #tests }

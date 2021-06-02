@@ -34,20 +34,28 @@ EDAACandidate >> adapterClassFromKey [
 { #category : #api }
 EDAACandidate >> adapterClassFromPragma [
 	| results annotatedClasses |
+	results := OrderedCollection new.
 	annotatedClasses := EDAAPragmaBasedCandidateAdapterClassNameResolver
 		traitUsers.
 	annotatedClasses
-		do: [ :annotatedClass | 
-			| pragmas |
-			pragmas := Pragma
-				allNamed: #edaAdapterClass:
-				inAndBelow: annotatedClass.
-			results := pragmas
-				select: [ :pragma | pragma method selector = self key ]
-				thenCollect: [ :pragma | pragma argumentAt: 1 ] ].
+		do:
+			[ :annotatedClass | results addAll: (self adapterClassesFromPragmaIn: annotatedClass) ].
 	^ results
 		ifNil: [ nil ]
 		ifNotNil: [ :r | r ifEmpty: [ nil ] ifNotEmpty: [ :c | c first ] ]
+]
+
+{ #category : #api }
+EDAACandidate >> adapterClassesFromPragmaIn: annotatedClass [
+	| pragmas |
+	pragmas := (Pragma
+		allNamed: #edaAdapterClass:
+		inAndBelow: annotatedClass) asOrderedCollection.
+	pragmas
+		addAll: (Pragma allNamed: #edaAdapterClass: inAndBelow: annotatedClass class).
+	^ pragmas
+		select: [ :pragma | pragma method selector = self key ]
+		thenCollect: [ :pragma | pragma argumentAt: 1 ]
 ]
 
 { #category : #api }
