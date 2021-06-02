@@ -1,8 +1,17 @@
 Class {
 	#name : #EDAACandidateTest,
 	#superclass : #TestCase,
+	#traits : 'EDAAPragmaBasedCandidateAdapterClassNameResolver',
+	#classTraits : 'EDAAPragmaBasedCandidateAdapterClassNameResolver classTrait',
 	#category : #'EDAA-Domain-Tests'
 }
+
+{ #category : #tests }
+EDAACandidateTest >> arbitraryKey [
+	"Maps 'arbitraryKey' to #EDAAMongoEventStore"
+	<edaAdapterClass: #EDAAMongoEventStore>
+	^ self
+]
 
 { #category : #tests }
 EDAACandidateTest >> testAdapterClassAsCandidateKey [
@@ -11,6 +20,13 @@ EDAACandidateTest >> testAdapterClassAsCandidateKey [
 	self assert: candidate adapterClass equals: #EDAAMongoEventStore.
 	candidate := EDAACandidate withKey: 'EDAAMemoryEventStore' value: nil.
 	self assert: candidate adapterClass equals: #EDAAMemoryEventStore.
+]
+
+{ #category : #tests }
+EDAACandidateTest >> testAdapterClassFromPragma [
+	| candidate |
+	candidate := EDAACandidate withKey: 'arbitraryKey' value: nil.
+	self assert: candidate adapterClass equals: #EDAAMongoEventStore
 ]
 
 { #category : #tests }
