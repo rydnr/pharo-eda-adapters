@@ -122,20 +122,20 @@ EDAAStompTopicListener >> asyncOnMessageDo: aBlock usingClient: aClient withConf
 ]
 
 { #category : #initialization }
-EDAAStompTopicListener >> buildClientWith: config [
+EDAAStompTopicListener >> buildClientWith: aConfig [
 	| result |
 	result := StampClient new.
-	result login: config username.
-	result passcode: config password.
-	result host: config host.
-	result port: config port.
-	result timeout: config timeout.
+	result login: aConfig username.
+	result passcode: aConfig password.
+	result host: aConfig host.
+	result port: aConfig port.
+	result timeout: aConfig timeout.
 	^ result
 ]
 
 { #category : #accessing }
-EDAAStompTopicListener >> buildIdUsingClient: aClient withConfig: config [
-	^ aClient nextId , '-', config destination
+EDAAStompTopicListener >> buildIdUsingClient: aClient withConfig: aConfig [
+	^ aClient nextId , '-', aConfig destination
 ]
 
 { #category : #accessing }
