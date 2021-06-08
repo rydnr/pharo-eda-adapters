@@ -19,7 +19,7 @@ Children (not instances) of this class would be configured via the Settings fram
 "
 Class {
 	#name : #EDAAStompTopicListener,
-	#superclass : #EDATopicListener,
+	#superclass : #EDAPTopicListener,
 	#traits : 'EDACPrintOnHelper + EDACErrorHelper',
 	#classTraits : 'EDACPrintOnHelper classTrait + EDACErrorHelper classTrait',
 	#instVars : [

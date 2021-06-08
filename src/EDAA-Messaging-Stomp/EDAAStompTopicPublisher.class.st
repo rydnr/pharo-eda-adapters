@@ -9,7 +9,7 @@ Contains the configuration needed to publish messages to exchanges.
 "
 Class {
 	#name : #EDAAStompTopicPublisher,
-	#superclass : #EDATopicPublisher,
+	#superclass : #EDAPTopicPublisher,
 	#traits : 'EDACLogging',
 	#classTraits : 'EDACLogging classTrait',
 	#instVars : [
