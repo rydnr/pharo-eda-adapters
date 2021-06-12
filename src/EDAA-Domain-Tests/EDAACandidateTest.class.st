@@ -7,17 +7,34 @@ Class {
 }
 
 { #category : #annotations }
+EDAACandidateTest class >> arbitraryKey [
+	"Maps 'arbitraryKey' to #EDAAMemoryventStore"
+
+	<edaAdapterClass: #EDAAMemoryEventStore priority: 101>
+	^ self
+]
+
+{ #category : #annotations }
 EDAACandidateTest class >> classSideArbitraryKey [
 	"Maps 'classSideArbitraryKey' to #EDAAMemoryventStore"
 
-	<edaAdapterClass: #EDAAMemoryEventStore>
+	<edaAdapterClass: #EDAAMemoryEventStore priority: 102>
+	^ self
+]
+
+{ #category : #tests }
+EDAACandidateTest >> EDAAMongoEventStore [
+	"See testAdapterMatchingKeyIsPreferred"
+
+	<edaAdapterClass: #EDAAMemoryEventStore priority: 1000>
 	^ self
 ]
 
 { #category : #tests }
 EDAACandidateTest >> arbitraryKey [
 	"Maps 'arbitraryKey' to #EDAAMongoEventStore"
-	<edaAdapterClass: #EDAAMongoEventStore>
+
+	<edaAdapterClass: #EDAAMongoEventStore priority: 100>
 	^ self
 ]
 
@@ -40,6 +57,14 @@ EDAACandidateTest >> testAdapterClassFromPragma [
 ]
 
 { #category : #tests }
+EDAACandidateTest >> testAdapterMatchingKeyIsPreferred [
+	| candidate |
+	candidate := (EDAACandidate withKey: 'EDAAMongoEventStore' value: nil)
+		adapterClass.
+	self assert: candidate equals: #EDAAMongoEventStore
+]
+
+{ #category : #tests }
 EDAACandidateTest >> testBuilderMethod [
 	| key candidate value |
 	key := 'candidateKey'.
@@ -48,4 +73,13 @@ EDAACandidateTest >> testBuilderMethod [
 	self
 		assert: candidate key equals: key;
 		assert: candidate value equals: value
+]
+
+{ #category : #tests }
+EDAACandidateTest >> testSeveralAdaptersWithTheSameKeyAreSupported [
+	| candidates |
+	candidates := (EDAACandidate withKey: 'arbitraryKey' value: nil)
+		adapterClasses.
+	self assert: (candidates includes: #EDAAMongoEventStore).
+	self assert: (candidates includes: #EDAAMemoryEventStore)
 ]

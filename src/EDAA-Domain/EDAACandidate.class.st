@@ -15,15 +15,16 @@ EDAACandidate class >> withKey: aKey value: aValue [
 
 { #category : #api }
 EDAACandidate >> adapterClass [
-	| result valid |
-	result := self adapterClassFromKey.
-	valid := self isClassValid: result.
-	valid
-		ifFalse: [ result := self adapterClassFromPragma.
-			valid := self isClassValid: result ].
-	^ valid
-		ifTrue: [ result ]
-		ifFalse: [ nil ]
+	| result fromKey potentialAdapterClasses |
+	fromKey := self adapterClassFromKey.
+	result := (self isClassValid: fromKey)
+		ifTrue: [ fromKey ]
+		ifFalse: [ potentialAdapterClasses := self adapterClassesFromPragma
+				select: [ :cls | self isClassValid: cls ].
+			potentialAdapterClasses
+				ifEmpty: [ nil ]
+				ifNotEmpty: [ :c | c first ] ].
+	^ result
 ]
 
 { #category : #api }
@@ -32,7 +33,15 @@ EDAACandidate >> adapterClassFromKey [
 ]
 
 { #category : #api }
-EDAACandidate >> adapterClassFromPragma [
+EDAACandidate >> adapterClasses [
+	| results |
+	results := self adapterClassesFromPragma.
+	self adapterClassFromKey ifNotNil: [ :k | results addFirst: k ].
+	^ results select: [ :cls | self isClassValid: cls ]
+]
+
+{ #category : #api }
+EDAACandidate >> adapterClassesFromPragma [
 	| results annotatedClasses |
 	results := OrderedCollection new.
 	annotatedClasses := EDAAPragmaBasedCandidateAdapterClassNameResolver
@@ -41,20 +50,18 @@ EDAACandidate >> adapterClassFromPragma [
 		do:
 			[ :annotatedClass | results addAll: (self adapterClassesFromPragmaIn: annotatedClass) ].
 	^ results
-		ifNil: [ nil ]
-		ifNotNil: [ :r | r ifEmpty: [ nil ] ifNotEmpty: [ :c | c first ] ]
 ]
 
 { #category : #api }
 EDAACandidate >> adapterClassesFromPragmaIn: annotatedClass [
 	| pragmas |
 	pragmas := (Pragma
-		allNamed: #edaAdapterClass:
+		allNamed: #edaAdapterClass:priority:
 		inAndBelow: annotatedClass) asOrderedCollection.
 	pragmas
-		addAll: (Pragma allNamed: #edaAdapterClass: inAndBelow: annotatedClass class).
+		addAll: (Pragma allNamed: #edaAdapterClass:priority: inAndBelow: annotatedClass class).
 	^ pragmas
-		select: [ :pragma | pragma method selector = self key ]
+		select: [ :pragma | pragma method selector = self key asSymbol ]
 		thenCollect: [ :pragma | pragma argumentAt: 1 ]
 ]
 
