@@ -33,6 +33,33 @@ EDAACandidate >> adapterClassFromKey [
 ]
 
 { #category : #api }
+EDAACandidate >> adapterClassPragmas [
+	| results annotatedClasses |
+	results := OrderedCollection new.
+	annotatedClasses := EDAAPragmaBasedCandidateAdapterClassNameResolver
+		traitUsers.
+	annotatedClasses
+		do:
+			[ :annotatedClass | results addAll: (self adapterClassPragmasIn: annotatedClass) ].
+	^ results
+]
+
+{ #category : #api }
+EDAACandidate >> adapterClassPragmasIn: annotatedClass [
+	| pragmas |
+	pragmas := (Pragma
+		allNamed: #edaAdapterClass:priority:
+		inAndBelow: annotatedClass) asOrderedCollection.
+	pragmas
+		addAll:
+			(Pragma
+				allNamed: #edaAdapterClass:priority:
+				inAndBelow: annotatedClass class).
+	^ pragmas
+		select: [ :pragma | pragma method selector = self key asSymbol ]
+]
+
+{ #category : #api }
 EDAACandidate >> adapterClasses [
 	| results |
 	results := self adapterClassesFromPragma.
@@ -42,14 +69,9 @@ EDAACandidate >> adapterClasses [
 
 { #category : #api }
 EDAACandidate >> adapterClassesFromPragma [
-	| results annotatedClasses |
-	results := OrderedCollection new.
-	annotatedClasses := EDAAPragmaBasedCandidateAdapterClassNameResolver
-		traitUsers.
-	annotatedClasses
-		do:
-			[ :annotatedClass | results addAll: (self adapterClassesFromPragmaIn: annotatedClass) ].
-	^ results
+	^ (self adapterClassPragmas
+		sort: [ :a :b | (a argumentAt: 2) < (b argumentAt: 2) ])
+		collect: [ :p | p argumentAt: 1 ]
 ]
 
 { #category : #api }

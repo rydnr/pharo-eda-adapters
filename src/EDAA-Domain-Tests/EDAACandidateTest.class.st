@@ -26,7 +26,7 @@ EDAACandidateTest class >> classSideArbitraryKey [
 EDAACandidateTest >> EDAAMongoEventStore [
 	"See testAdapterMatchingKeyIsPreferred"
 
-	<edaAdapterClass: #EDAAMemoryEventStore priority: 1000>
+	<edaAdapterClass: #EDAAMongoEventStore priority: 1000>
 	^ self
 ]
 
@@ -34,7 +34,7 @@ EDAACandidateTest >> EDAAMongoEventStore [
 EDAACandidateTest >> arbitraryKey [
 	"Maps 'arbitraryKey' to #EDAAMongoEventStore"
 
-	<edaAdapterClass: #EDAAMongoEventStore priority: 100>
+	<edaAdapterClass: #EDAAMongoEventStore priority: 2000>
 	^ self
 ]
 
@@ -51,8 +51,10 @@ EDAACandidateTest >> testAdapterClassAsCandidateKey [
 EDAACandidateTest >> testAdapterClassFromPragma [
 	| candidate |
 	candidate := EDAACandidate withKey: 'arbitraryKey' value: nil.
-	self assert: candidate adapterClass equals: #EDAAMongoEventStore.
-	candidate := EDAACandidate withKey: 'classSideArbitraryKey' value: nil.
+	self assert: candidate adapterClass equals: #EDAAMemoryEventStore.
+	candidate := EDAACandidate
+		withKey: 'classSideArbitraryKey'
+		value: nil.
 	self assert: candidate adapterClass equals: #EDAAMemoryEventStore
 ]
 
@@ -73,6 +75,14 @@ EDAACandidateTest >> testBuilderMethod [
 	self
 		assert: candidate key equals: key;
 		assert: candidate value equals: value
+]
+
+{ #category : #tests }
+EDAACandidateTest >> testPriorityIsUsedToPickThePragmaAdapter [
+	| candidate |
+	candidate := (EDAACandidate withKey: 'arbitraryKey' value: nil)
+		adapterClassesFromPragma first.
+	self assert: candidate equals: #EDAAMemoryEventStore
 ]
 
 { #category : #tests }
