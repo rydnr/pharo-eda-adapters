@@ -10,8 +10,16 @@ It's used to publish events reflecting changes in aggregate roots upon receiving
 Class {
 	#name : #EDAAEventStompTopicPublisher,
 	#superclass : #EDAAStompTopicPublisher,
+	#traits : 'EDAAContainsAdapterClassPragma',
+	#classTraits : 'EDAAContainsAdapterClassPragma classTrait',
 	#category : #'EDAA-Messaging-Stomp'
 }
+
+{ #category : #meta }
+EDAAEventStompTopicPublisher class >> eventPublisher [
+	<edaAdapterClass: #EDAAEventStompTopicPublisher priority: 100>
+	^ self
+]
 
 { #category : #API }
 EDAAEventStompTopicPublisher >> publishEvent: anEvent [

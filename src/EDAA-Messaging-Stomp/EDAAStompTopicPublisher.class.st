@@ -135,7 +135,7 @@ EDAAStompTopicPublisher >> errorDestination [
 { #category : #initialization }
 EDAAStompTopicPublisher >> initialize [
 	super initialize.
-	self client: (self buildClientWith: self class)
+	"self client: (self buildClientWith: self class)"
 
 ]
 

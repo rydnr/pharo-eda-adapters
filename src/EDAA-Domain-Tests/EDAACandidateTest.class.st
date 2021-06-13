@@ -1,8 +1,8 @@
 Class {
 	#name : #EDAACandidateTest,
 	#superclass : #TestCase,
-	#traits : 'EDAAPragmaBasedCandidateAdapterClassNameResolver',
-	#classTraits : 'EDAAPragmaBasedCandidateAdapterClassNameResolver classTrait',
+	#traits : 'EDAAContainsAdapterClassPragma',
+	#classTraits : 'EDAAContainsAdapterClassPragma classTrait',
 	#category : #'EDAA-Domain-Tests'
 }
 
@@ -36,6 +36,39 @@ EDAACandidateTest >> arbitraryKey [
 
 	<edaAdapterClass: #EDAAMongoEventStore priority: 2000>
 	^ self
+]
+
+{ #category : #tests }
+EDAACandidateTest >> disabled_testCommandListenerIsConfigured [
+	| candidate values adapter |
+	values := Dictionary new.
+	values at: 'host' put: 'localhost';
+	at: 'port' put: 61613;
+	at: 'user' put: 'user';
+	at: 'password' put: 'secret';
+	at: 'queue' put: 'messages-to-eda';
+	at: 'durable' put: true;
+	at: 'ack' put: 'client-individual';
+	at: 'prefetchCount' put: 1;
+	at: 'timeout' put: 60;
+	at: 'debug' put: true;
+	at: 'restartOnError' put: false.
+	candidate := (EDAACandidate withKey: 'commandListener' value: values).
+	adapter := candidate toAdapter.
+	self
+		assert: adapter isNotNil;
+		assert: adapter class equals: #EDAACommandStompTopicListener;
+		assert: adapter host equals: 'localhost';
+		assert: adapter port equals: 61613;
+		assert: adapter user equals: 'user';
+		assert: adapter password equals: 'secret';
+		assert: adapter queue equals: 'messages-to-eda';
+		assert: adapter durable;
+		assert: adapter ack equals: 'client-individual';
+		assert: adapter prefetchCount equals: 1;
+		assert: adapter timeout equals: 60;
+		assert: adapter debug;
+		assert: adapter restartOnError not
 ]
 
 { #category : #tests }
@@ -75,6 +108,26 @@ EDAACandidateTest >> testBuilderMethod [
 	self
 		assert: candidate key equals: key;
 		assert: candidate value equals: value
+]
+
+{ #category : #tests }
+EDAACandidateTest >> testCommandListenerIsAvailable [
+	| candidate adapter |
+	candidate := (EDAACandidate withKey: 'commandListener' value: nil).
+	adapter := candidate toAdapter.
+	self
+		assert: adapter isNotNil;
+		assert: adapter class equals: EDAACommandStompTopicListener
+]
+
+{ #category : #tests }
+EDAACandidateTest >> testEventPublisherIsAvailable [
+	| candidate adapter |
+	candidate := (EDAACandidate withKey: 'eventPublisher' value: nil).
+	adapter := candidate toAdapter.
+	self
+		assert: adapter isNotNil;
+		assert: adapter class equals: EDAAEventStompTopicPublisher
 ]
 
 { #category : #tests }

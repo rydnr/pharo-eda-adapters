@@ -10,5 +10,13 @@ Manage how to listen to incoming commands, while acting as the configuration con
 Class {
 	#name : #EDAACommandStompTopicListener,
 	#superclass : #EDAAStompTopicListener,
+	#traits : 'EDAAContainsAdapterClassPragma',
+	#classTraits : 'EDAAContainsAdapterClassPragma classTrait',
 	#category : #'EDAA-Messaging-Stomp'
 }
+
+{ #category : #meta }
+EDAACommandStompTopicListener class >> commandListener [
+	<edaAdapterClass>
+	^ self
+]
