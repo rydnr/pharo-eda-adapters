@@ -39,39 +39,6 @@ EDAACandidateTest >> arbitraryKey [
 ]
 
 { #category : #tests }
-EDAACandidateTest >> disabled_testCommandListenerIsConfigured [
-	| candidate values adapter |
-	values := Dictionary new.
-	values at: 'host' put: 'localhost';
-	at: 'port' put: 61613;
-	at: 'user' put: 'user';
-	at: 'password' put: 'secret';
-	at: 'queue' put: 'messages-to-eda';
-	at: 'durable' put: true;
-	at: 'ack' put: 'client-individual';
-	at: 'prefetchCount' put: 1;
-	at: 'timeout' put: 60;
-	at: 'debug' put: true;
-	at: 'restartOnError' put: false.
-	candidate := (EDAACandidate withKey: 'commandListener' value: values).
-	adapter := candidate toAdapter.
-	self
-		assert: adapter isNotNil;
-		assert: adapter class equals: #EDAACommandStompTopicListener;
-		assert: adapter host equals: 'localhost';
-		assert: adapter port equals: 61613;
-		assert: adapter user equals: 'user';
-		assert: adapter password equals: 'secret';
-		assert: adapter queue equals: 'messages-to-eda';
-		assert: adapter durable;
-		assert: adapter ack equals: 'client-individual';
-		assert: adapter prefetchCount equals: 1;
-		assert: adapter timeout equals: 60;
-		assert: adapter debug;
-		assert: adapter restartOnError not
-]
-
-{ #category : #tests }
 EDAACandidateTest >> testAdapterClassAsCandidateKey [
 	| candidate |
 	candidate := EDAACandidate withKey: 'EDAAMongoEventStore' value: nil.
@@ -118,6 +85,39 @@ EDAACandidateTest >> testCommandListenerIsAvailable [
 	self
 		assert: adapter isNotNil;
 		assert: adapter class equals: EDAACommandStompTopicListener
+]
+
+{ #category : #tests }
+EDAACandidateTest >> testCommandListenerIsConfigured [
+	| candidate values adapter |
+	values := Dictionary new.
+	values at: 'host' put: 'localhost';
+	at: 'port' put: 61613;
+	at: 'user' put: 'user';
+	at: 'password' put: 'secret';
+	at: 'queue' put: 'messages-to-eda';
+	at: 'durable' put: true;
+	at: 'ack' put: 'client-individual';
+	at: 'prefetchCount' put: 1;
+	at: 'timeout' put: 60;
+	at: 'debug' put: true;
+	at: 'restartOnError' put: false.
+	candidate := (EDAACandidate withKey: 'commandListener' value: values).
+	adapter := candidate toAdapter.
+	self
+		assert: adapter isNotNil;
+		assert: adapter class equals: EDAACommandStompTopicListener;
+		assert: adapter host equals: 'localhost';
+		assert: adapter port equals: 61613;
+		assert: adapter user equals: 'user';
+		assert: adapter password equals: 'secret';
+		assert: adapter queue equals: 'messages-to-eda';
+		assert: adapter durable;
+		assert: adapter ack equals: 'client-individual';
+		assert: adapter prefetchCount equals: 1;
+		assert: adapter timeout equals: 60;
+		assert: adapter debug;
+		assert: adapter restartOnError not
 ]
 
 { #category : #tests }

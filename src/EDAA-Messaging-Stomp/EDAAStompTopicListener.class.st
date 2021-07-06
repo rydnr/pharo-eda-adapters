@@ -26,10 +26,7 @@ Class {
 		'client',
 		'listenerProcess',
 		'subscriptionId',
-		'config',
-		'commandListenerClientDebug'
-	],
-	#classInstVars : [
+		'commandListenerClientDebug',
 		'username',
 		'queue',
 		'port',
@@ -113,6 +110,16 @@ EDAAStompTopicListener class >> withConfig: aConfig [
 	^ result
 ]
 
+{ #category : #accessing }
+EDAAStompTopicListener >> ack [
+	^ ack
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> ack: anObject [
+	ack := anObject
+]
+
 { #category : #lifecycle }
 EDAAStompTopicListener >> asyncOnMessageDo: aBlock usingClient: aClient withConfig: aConfig [
 	| result |
@@ -163,18 +170,38 @@ EDAAStompTopicListener >> close [
 ]
 
 { #category : #accessing }
-EDAAStompTopicListener >> config [
-	^ config
+EDAAStompTopicListener >> commandListenerClientDebug [
+	^ commandListenerClientDebug
 ]
 
 { #category : #accessing }
-EDAAStompTopicListener >> config: aConfig [
-	config := aConfig
+EDAAStompTopicListener >> commandListenerClientDebug: anObject [
+	commandListenerClientDebug := anObject
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> durable [
+	^ durable
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> durable: anObject [
+	durable := anObject
 ]
 
 { #category : #lifecycle }
 EDAAStompTopicListener >> forceUnsubscribe [
 	self subscriptionId: nil
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> host [
+	^ host
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> host: anObject [
+	host := anObject
 ]
 
 { #category : #accessing }
@@ -207,6 +234,46 @@ EDAAStompTopicListener >> nextId [
 EDAAStompTopicListener >> onMessageDo: aBlock [
 	self listenerProcess: (self asyncOnMessageDo: aBlock usingClient: self client withConfig: self config).
 	^ self listenerProcess
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> password [
+	^ password
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> password: anObject [
+	password := anObject
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> port [
+	^ port
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> port: anObject [
+	port := anObject
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> prefetchCount [
+	^ prefetchCount
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> prefetchCount: anObject [
+	prefetchCount := anObject
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> queue [
+	^ queue
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> queue: anObject [
+	queue := anObject
 ]
 
 { #category : #initialization }
@@ -331,6 +398,16 @@ EDAAStompTopicListener >> syncOnMessageDo: aBlock usingClient: aClient withConfi
 			ex signal ]
 ]
 
+{ #category : #accessing }
+EDAAStompTopicListener >> timeout [
+	^ timeout
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> timeout: anObject [
+	timeout := anObject
+]
+
 { #category : #lifecycle }
 EDAAStompTopicListener >> unsubscribe [
 	^ self unsubscribe: self subscriptionId usingClient: self client
@@ -348,4 +425,14 @@ EDAAStompTopicListener >> unsubscribe: id usingClient: aClient [
 				on: Error
 					do: [ "ignore this error" ].
 			aClient close ]
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> username [
+	^ username
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> username: anObject [
+	username := anObject
 ]
