@@ -61,7 +61,7 @@ BaselineOfPharoEDAAdapters >> includeMongotalk: spec [
 BaselineOfPharoEDAAdapters >> includePharoEDACommon: spec [
 	spec
 		baseline: 'PharoEDACommon'
-		with: [ spec repository: 'github://osoco/pharo-eda-common:main' ].
+		with: [ spec repository: 'github://rydnr/pharo-eda-common:main' ].
 	^ spec
 ]
 
@@ -69,7 +69,7 @@ BaselineOfPharoEDAAdapters >> includePharoEDACommon: spec [
 BaselineOfPharoEDAAdapters >> includePharoEDAErrors: spec [
 	spec
 		baseline: 'PharoEDAErrors'
-		with: [ spec repository: 'github://osoco/pharo-eda-errors:main' ].
+		with: [ spec repository: 'github://rydnr/pharo-eda-errors:main' ].
 	^ spec
 ]
 
@@ -77,7 +77,7 @@ BaselineOfPharoEDAAdapters >> includePharoEDAErrors: spec [
 BaselineOfPharoEDAAdapters >> includePharoEDAPorts: spec [
 	spec
 		baseline: 'PharoEDAPorts'
-		with: [ spec repository: 'github://osoco/pharo-eda-ports:main' ].
+		with: [ spec repository: 'github://rydnr/pharo-eda-ports:main' ].
 	^ spec
 ]
 
@@ -93,7 +93,7 @@ BaselineOfPharoEDAAdapters >> includeVoyage: spec [
 	spec
 		baseline: 'Voyage'
 		with: [ spec
-				repository: 'github://pharo-nosql/voyage:1.7/mc' ].
+				repository: 'github://pharo-nosql/voyage:1.7.1/mc' ].
 	^ spec
 
 ]
