@@ -16,7 +16,7 @@ PharoEDA-Adapters will inspect its environment and try to build functioning adap
 First, load it with Metacello:
 
 ```smalltalk
-Metacello new repository: 'github://osoco/pharo-eda-adapters:main'; baseline: #PharoEDAAdapters; load
+Metacello new repository: 'github://rydnr/pharo-eda-adapters:main'; baseline: #PharoEDAAdapters; load
 ```
 
 Then, run it with
