@@ -115,7 +115,7 @@ class DownloadPharoImageTask extends DefaultTask {
 }
 
 class RetrieveFreshGtoolkitImageTask extends DefaultTask {
-    String gtHome
+    @Input String gtHome
     @TaskAction
     def retrieveFreshImage() {
         project.exec {
@@ -125,11 +125,11 @@ class RetrieveFreshGtoolkitImageTask extends DefaultTask {
 }
 
 class SavePharoImageTask extends DefaultTask {
-    String fromImageName = "Pharo.image"
-    String pharoPath = "pharo"
-    def commonPharoArgs
-    String toImageName
-    boolean shouldDeleteOldImage
+    @Input String fromImageName = "Pharo.image"
+    @Input String pharoPath = "pharo"
+    @Input def commonPharoArgs
+    @Input String toImageName
+    @Input boolean shouldDeleteOldImage
 
     @TaskAction
     def renamePharoImage() {
@@ -147,11 +147,11 @@ class SavePharoImageTask extends DefaultTask {
 }
 
 class SaveGtoolkitImageTask extends DefaultTask {
-    String fromImageName = "GlamorousToolkit/GlamorousToolkit.image"
-    String pharoPath = "pharo"
-    def commonPharoArgs
-    String toImageName
-    boolean shouldDeleteOldImage
+    @Input String fromImageName = "GlamorousToolkit/GlamorousToolkit.image"
+    @Input String pharoPath = "pharo"
+    @Input def commonPharoArgs
+    @Input String toImageName
+    @Input boolean shouldDeleteOldImage
 
     @TaskAction
     def renameGtoolkitImage() {
@@ -169,12 +169,12 @@ class SaveGtoolkitImageTask extends DefaultTask {
 }
 
 class LoadMetacelloConfigTask extends DefaultTask {
-    String image = "Pharo.image"
-    String pharoPath = "pharo"
-    def commonPharoArgs
-    String repository
-    String configuration
-    String version
+    @Input String image = "Pharo.image"
+    @Input String pharoPath = "pharo"
+    @Input def commonPharoArgs
+    @Input String repository
+    @Input String configuration
+    @Input String version
 
     @TaskAction
     def loadMetacelloConfig() {
@@ -189,10 +189,10 @@ class LoadMetacelloConfigTask extends DefaultTask {
 }
 
 class EvalSmalltalkExpressionTask extends DefaultTask {
-    String image = "Pharo.image"
-    String pharoPath = "pharo"
-    def commonPharoArgs
-    String expression
+    @Input String image = "Pharo.image"
+    @Input String pharoPath = "pharo"
+    @Input def commonPharoArgs
+    @Input String expression
 
     @TaskAction
     def evalSmalltalkExpression() {
@@ -207,10 +207,10 @@ class EvalSmalltalkExpressionTask extends DefaultTask {
 }
 
 class RunSmalltalkScriptTask extends DefaultTask {
-    String image = "Pharo.image"
-    String pharoPath = "pharo"
-    def commonPharoArgs
-    String script
+    @Input String image = "Pharo.image"
+    @Input String pharoPath = "pharo"
+    @Input def commonPharoArgs
+    @Input String script
 
     @TaskAction
     def runSmalltalkScript() {
@@ -225,11 +225,11 @@ class RunSmalltalkScriptTask extends DefaultTask {
 }
 
 class RunPharoTestsTask extends DefaultTask {
-    String image = "Pharo.image"
-    String pharoPath = "pharo"
-    def commonPharoArgs
-    String packageName
-    boolean shouldOutputAsJUnit
+    @Input String image = "Pharo.image"
+    @Input String pharoPath = "pharo"
+    @Input def commonPharoArgs
+    @Input String packageName
+    @Input boolean shouldOutputAsJUnit
 
     @TaskAction
     def runTests() {
