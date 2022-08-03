@@ -10,6 +10,7 @@ BaselineOfPharoEDAAdapters >> baseline: spec [
 	spec
 		for: #common
 		do: [ spec blessing: #baseline.
+            self includePharoEDACommon: spec.
 			self includePharoEDAPorts: spec.
 			self includePharoEDAErrors: spec.
 			self includeStamp: spec.
@@ -62,6 +63,14 @@ BaselineOfPharoEDAAdapters >> includePharoEDAErrors: spec [
 		baseline: 'PharoEDAErrors'
 		with: [ spec repository: 'github://rydnr/pharo-eda-errors:main' ].
 	^ spec
+]
+
+{ #category : #dependencies }
+BaselineOfPharoEDAAdapters >> includePharoEDACommon: spec [
+       spec
+               baseline: 'PharoEDACommon'
+               with: [ spec repository: 'github://rydnr/pharo-eda-common:main' ].
+       ^ spec
 ]
 
 { #category : #dependencies }
