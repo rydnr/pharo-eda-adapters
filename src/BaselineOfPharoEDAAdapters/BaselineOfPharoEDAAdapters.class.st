@@ -10,7 +10,6 @@ BaselineOfPharoEDAAdapters >> baseline: spec [
 	spec
 		for: #common
 		do: [ spec blessing: #baseline.
-			self includePharoEDACommon: spec.
 			self includePharoEDAPorts: spec.
 			self includePharoEDAErrors: spec.
 			self includeStamp: spec.
@@ -55,14 +54,6 @@ BaselineOfPharoEDAAdapters >> includeMongotalk: spec [
 				repository: 'github://pharo-nosql/mongotalk:1.22/mc' ].
 	^ spec
 
-]
-
-{ #category : #dependencies }
-BaselineOfPharoEDAAdapters >> includePharoEDACommon: spec [
-	spec
-		baseline: 'PharoEDACommon'
-		with: [ spec repository: 'github://rydnr/pharo-eda-common:main' ].
-	^ spec
 ]
 
 { #category : #dependencies }
