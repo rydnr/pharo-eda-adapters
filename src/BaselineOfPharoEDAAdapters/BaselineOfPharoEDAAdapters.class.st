@@ -91,7 +91,7 @@ BaselineOfPharoEDAAdapters >> includeStamp: spec [
 { #category : #dependencies }
 BaselineOfPharoEDAAdapters >> includeVoyage: spec [
 	spec
-		baseline: 'Voyage'
+		baseline: 'VoyageMongo'
 		with: [ spec
 				repository: 'github://pharo-nosql/voyage:v1.1.0/mc' ].
 	^ spec
