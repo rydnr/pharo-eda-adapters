@@ -39,11 +39,11 @@ BaselineOfPharoEDAAdapters >> declarePackagesIn: spec [
 		package: #'EDAA-EventStore-InMemory'
 			with: [ spec requires: #('PharoEDACommon' 'PharoEDAPorts') ];
 		package: #'EDAA-EventStore-Voyage'
-			with: [ spec requires: #('Voyage' 'PharoEDACommon' 'PharoEDAPorts') ];
+			with: [ spec requires: #('VoyageMongo' 'PharoEDACommon' 'PharoEDAPorts') ];
 		package: #'EDAA-Messaging-Stomp'
 			with: [ spec requires: #('Stamp' 'PharoEDACommon' 'PharoEDAPorts') ];
 		package: #'EDAA-Projections-Voyage'
-			with: [ spec requires: #('Voyage' 'PharoEDACommon' 'PharoEDAPorts') ];
+			with: [ spec requires: #('VoyageMongo' 'PharoEDACommon' 'PharoEDAPorts') ];
 		package: #'EDAA-SMTP' with: [ spec requires: #('PharoEDACommon') ]
 ]
 
