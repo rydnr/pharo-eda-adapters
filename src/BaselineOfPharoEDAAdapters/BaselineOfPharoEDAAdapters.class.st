@@ -39,11 +39,11 @@ BaselineOfPharoEDAAdapters >> declarePackagesIn: spec [
 		package: #'EDAA-EventStore-InMemory'
 			with: [ spec requires: #('PharoEDACommon' 'PharoEDAPorts') ];
 		package: #'EDAA-EventStore-Voyage'
-			with: [ spec requires: #('VoyageMongo' 'PharoEDACommon' 'PharoEDAPorts') ];
+			with: [ spec requires: #('Voyage' 'PharoEDACommon' 'PharoEDAPorts') ];
 		package: #'EDAA-Messaging-Stomp'
 			with: [ spec requires: #('Stamp' 'PharoEDACommon' 'PharoEDAPorts') ];
 		package: #'EDAA-Projections-Voyage'
-			with: [ spec requires: #('VoyageMongo' 'PharoEDACommon' 'PharoEDAPorts') ];
+			with: [ spec requires: #('Voyage' 'PharoEDACommon' 'PharoEDAPorts') ];
 		package: #'EDAA-SMTP' with: [ spec requires: #('PharoEDACommon') ]
 ]
 
@@ -91,7 +91,7 @@ BaselineOfPharoEDAAdapters >> includeStamp: spec [
 { #category : #dependencies }
 BaselineOfPharoEDAAdapters >> includeVoyage: spec [
 	spec
-		baseline: 'VoyageMongo'
+		baseline: 'Voyage'
 		with: [ spec
 				repository: 'github://pharo-nosql/voyage:pharo10-ready/mc' ].
 	^ spec
