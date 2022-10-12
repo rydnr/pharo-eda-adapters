@@ -93,7 +93,7 @@ BaselineOfPharoEDAAdapters >> includeVoyage: spec [
 	spec
 		baseline: 'VoyageMongo'
 		with: [ spec
-				repository: 'github://pharo-nosql/voyage:v1.1.0/mc' ].
+				repository: 'github://pharo-nosql/voyage:pharo10-ready/mc' ].
 	^ spec
 
 ]
