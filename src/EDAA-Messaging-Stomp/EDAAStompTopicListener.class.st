@@ -26,16 +26,7 @@ Class {
 		'client',
 		'listenerProcess',
 		'subscriptionId',
-		'commandListenerClientDebug',
-		'username',
-		'queue',
-		'port',
-		'host',
-		'ack',
-		'durable',
-		'password',
-		'prefetchCount',
-		'timeout'
+		'config'
 	],
 	#category : #'EDAA-Messaging-Stomp'
 }
@@ -112,12 +103,8 @@ EDAAStompTopicListener class >> withConfig: aConfig [
 
 { #category : #accessing }
 EDAAStompTopicListener >> ack [
-	^ ack
-]
 
-{ #category : #accessing }
-EDAAStompTopicListener >> ack: anObject [
-	ack := anObject
+	^ self config ack
 ]
 
 { #category : #lifecycle }
@@ -171,22 +158,26 @@ EDAAStompTopicListener >> close [
 
 { #category : #accessing }
 EDAAStompTopicListener >> commandListenerClientDebug [
-	^ commandListenerClientDebug
+
+	^ config debug
 ]
 
 { #category : #accessing }
-EDAAStompTopicListener >> commandListenerClientDebug: anObject [
-	commandListenerClientDebug := anObject
+EDAAStompTopicListener >> config [
+
+	^ config
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> config: anObject [
+
+	config := anObject
 ]
 
 { #category : #accessing }
 EDAAStompTopicListener >> durable [
-	^ durable
-]
 
-{ #category : #accessing }
-EDAAStompTopicListener >> durable: anObject [
-	durable := anObject
+	^ self config durable
 ]
 
 { #category : #lifecycle }
@@ -196,12 +187,8 @@ EDAAStompTopicListener >> forceUnsubscribe [
 
 { #category : #accessing }
 EDAAStompTopicListener >> host [
-	^ host
-]
 
-{ #category : #accessing }
-EDAAStompTopicListener >> host: anObject [
-	host := anObject
+	^ self config host
 ]
 
 { #category : #accessing }
@@ -238,42 +225,26 @@ EDAAStompTopicListener >> onMessageDo: aBlock [
 
 { #category : #accessing }
 EDAAStompTopicListener >> password [
-	^ password
-]
 
-{ #category : #accessing }
-EDAAStompTopicListener >> password: anObject [
-	password := anObject
+	^ config password
 ]
 
 { #category : #accessing }
 EDAAStompTopicListener >> port [
-	^ port
-]
 
-{ #category : #accessing }
-EDAAStompTopicListener >> port: anObject [
-	port := anObject
+	^ self config port
 ]
 
 { #category : #accessing }
 EDAAStompTopicListener >> prefetchCount [
-	^ prefetchCount
-]
 
-{ #category : #accessing }
-EDAAStompTopicListener >> prefetchCount: anObject [
-	prefetchCount := anObject
+	^ config prefetchCount
 ]
 
 { #category : #accessing }
 EDAAStompTopicListener >> queue [
-	^ queue
-]
 
-{ #category : #accessing }
-EDAAStompTopicListener >> queue: anObject [
-	queue := anObject
+	^ self config queue
 ]
 
 { #category : #initialization }
@@ -315,97 +286,83 @@ EDAAStompTopicListener >> subscriptionId: val [
 
 { #category : #enumerating }
 EDAAStompTopicListener >> syncOnMessageDo: aBlock usingClient: aClient withConfig: conf [
-	[ aClient
-		runWith: [ :message | 
-			| text |
-			text := message body greaseString.
-			self class
-				logReceivingMessage: message body greaseString
-				usingClient: aClient
-				from: conf destination.
-			[ | ack |
-			aBlock value: text.
-			ack := conf ack.
-			ack = #'client-individual'
-				ifFalse: [ self
-						logErrorMessage:
-							(String
-								streamContents: [ :s | 
-									s
-										nextPutAll: 'ACK was ''';
-										nextPutAll: conf ack greaseString;
-										nextPutAll: ''' in ';
-										nextPutAll: conf class greaseString;
-										nextPutAll: '. Resetting it to client-individual.' ]).
-					ack := #'client-individual' ].
-			ack = #'client-individual'
-				ifTrue: [ self logDebugMessage: 'Sending ACK...'.
-					aClient writeWithReceipt: message ackFrame.
-					self logDebugMessage: 'ACK sent.' ]
-				ifFalse: [ self
-						logErrorMessage:
-							(String
-								streamContents: [ :s | 
-									s
-										nextPutAll: 'Skipping ACK (type is ''';
-										nextPutAll: conf ack greaseString;
-										nextPut: $' ]) ].
-			self class
-				logMessageReceived: message body greaseString
-				usingClient: aClient
-				from: conf destination ]
-				on: Error - Break
-				do: [ :ex | 
-					((ex isKindOf: StampError) and: ex messageText = 'AMQP channel died')
-						ifTrue: [ ex signal ].
-					self
-						logErrorMessage:
-							(String
-								streamContents: [ :s | 
-									s
-										nextPutAll: 'Error consuming message: ';
-										nextPutAll: ex description greaseString;
-										nextPutAll: ' (';
-										nextPutAll: thisContext stack last greaseString;
-										nextPut: $) ]).
-					conf ack = #'client-individual'
-						ifTrue: [ | nack |
-							self
-								logDebugMessage:
-									(String
-										streamContents: [ :s | 
-											s
-												nextPutAll: 'Sending NACK message... ';
-												nextPutAll: text greaseString;
-												nextPut: $. ]).
-							nack := message nackFrame.
-							nack headers at: 'requeue' put: 'False'.
-							aClient writeWithReceipt: nack.
-							self
-								logDebugMessage:
-									(String
-										streamContents: [ :s | 
-											s
-												nextPutAll: 'NACK message sent ';
-												nextPutAll: text greaseString;
-												nextPut: $. ]) ].
-					self
-						manageError: ex
-						forMessage: text
-						usingErrorStrategy: EDACommandConsumingErrorBehavior strategy ] ] ]
+
+	[ 
+	aClient runWith: [ :message | 
+		| text |
+		text := message body greaseString.
+		self class
+			logReceivingMessage: message body greaseString
+			usingClient: aClient
+			from: conf destination.
+		[ 
+		| ack |
+		aBlock value: text.
+		ack := conf ack.
+		ack = #'client-individual' ifFalse: [ 
+			self logErrorMessage: (String streamContents: [ :s | 
+					 s
+						 nextPutAll: 'ACK was ''';
+						 nextPutAll: conf ack greaseString;
+						 nextPutAll: ''' in ';
+						 nextPutAll: conf class greaseString;
+						 nextPutAll: '. Resetting it to client-individual.' ]).
+			ack := #'client-individual' ].
+		ack = #'client-individual'
+			ifTrue: [ 
+				self logDebugMessage: 'Sending ACK...'.
+				aClient writeWithReceipt: message ackFrame.
+				self logDebugMessage: 'ACK sent.' ]
+			ifFalse: [ 
+				self logErrorMessage: (String streamContents: [ :s | 
+						 s
+							 nextPutAll: 'Skipping ACK (type is ''';
+							 nextPutAll: conf ack greaseString;
+							 nextPut: $' ]) ].
+		self class
+			logReceivingMessage: message body greaseString
+			usingClient: aClient
+			from: conf destination ]
+			on: Error - Break
+			do: [ :ex | 
+				((ex isKindOf: StampError) and:
+					 ex messageText = 'AMQP channel died') ifTrue: [ ex signal ].
+				self logErrorMessage: (String streamContents: [ :s | 
+						 s
+							 nextPutAll: 'Error consuming message: ';
+							 nextPutAll: ex description greaseString;
+							 nextPutAll: ' (';
+							 nextPutAll: thisContext stack last greaseString;
+							 nextPut: $) ]).
+				conf ack = #'client-individual' ifTrue: [ 
+					| nack |
+					self logDebugMessage: (String streamContents: [ :s | 
+							 s
+								 nextPutAll: 'Sending NACK message... ';
+								 nextPutAll: text greaseString;
+								 nextPut: $. ]).
+					nack := message nackFrame.
+					nack headers at: 'requeue' put: 'False'.
+					aClient writeWithReceipt: nack.
+					self logDebugMessage: (String streamContents: [ :s | 
+							 s
+								 nextPutAll: 'NACK message sent ';
+								 nextPutAll: text greaseString;
+								 nextPut: $. ]) ].
+				self
+					manageError: ex
+					forMessage: text
+					usingErrorStrategy: EDAECommandConsumingErrorBehavior strategy ] ] ]
 		on: PrimitiveFailed , StampError
-		do: [ :ex | self logErrorMessage: ex greaseString.
+		do: [ :ex | 
+			self logErrorMessage: ex greaseString.
 			ex signal ]
 ]
 
 { #category : #accessing }
 EDAAStompTopicListener >> timeout [
-	^ timeout
-]
 
-{ #category : #accessing }
-EDAAStompTopicListener >> timeout: anObject [
-	timeout := anObject
+	^ self config timeout
 ]
 
 { #category : #lifecycle }
@@ -429,10 +386,6 @@ EDAAStompTopicListener >> unsubscribe: id usingClient: aClient [
 
 { #category : #accessing }
 EDAAStompTopicListener >> username [
-	^ username
-]
 
-{ #category : #accessing }
-EDAAStompTopicListener >> username: anObject [
-	username := anObject
+	^ self config username
 ]
