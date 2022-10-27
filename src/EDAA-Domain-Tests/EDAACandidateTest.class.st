@@ -89,20 +89,22 @@ EDAACandidateTest >> testCommandListenerIsAvailable [
 
 { #category : #tests }
 EDAACandidateTest >> testCommandListenerIsConfigured [
+
 	| candidate values adapter |
 	values := Dictionary new.
-	values at: 'host' put: 'localhost';
-	at: 'port' put: 61613;
-	at: 'user' put: 'user';
-	at: 'password' put: 'secret';
-	at: 'queue' put: 'messages-to-eda';
-	at: 'durable' put: true;
-	at: 'ack' put: 'client-individual';
-	at: 'prefetchCount' put: 1;
-	at: 'timeout' put: 60;
-	at: 'debug' put: true;
-	at: 'restartOnError' put: false.
-	candidate := (EDAACandidate withKey: 'commandListener' value: values).
+	values
+		at: 'host' put: 'localhost';
+		at: 'port' put: 61613;
+		at: 'user' put: 'user';
+		at: 'password' put: 'secret';
+		at: 'queue' put: 'messages-to-eda';
+		at: 'durable' put: true;
+		at: 'ack' put: 'client-individual';
+		at: 'prefetchCount' put: 1;
+		at: 'timeout' put: 60;
+		at: 'debug' put: true;
+		at: 'restartOnError' put: false.
+	candidate := EDAACandidate withKey: 'commandListener' value: values.
 	adapter := candidate toAdapter.
 	self
 		assert: adapter isNotNil;
@@ -117,7 +119,7 @@ EDAACandidateTest >> testCommandListenerIsConfigured [
 		assert: adapter prefetchCount equals: 1;
 		assert: adapter timeout equals: 60;
 		assert: adapter debug;
-		assert: adapter restartOnError not
+		assert: adapter restartOnErrors not
 ]
 
 { #category : #tests }
