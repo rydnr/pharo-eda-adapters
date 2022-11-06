@@ -1,3 +1,16 @@
+"
+**Class**
+
+I'm a baseline to load PharoEDA Adapters.
+
+**Responsibilities**
+
+Guide Metacello to load PharoEDA-Adapters with its dependencies.
+
+**Collaborators**
+
+Metacello
+"
 Class {
 	#name : #BaselineOfPharoEDAAdapters,
 	#superclass : #BaselineOf,
@@ -58,19 +71,19 @@ BaselineOfPharoEDAAdapters >> includeMongotalk: spec [
 ]
 
 { #category : #dependencies }
-BaselineOfPharoEDAAdapters >> includePharoEDAErrors: spec [
-	spec
-		baseline: 'PharoEDAErrors'
-		with: [ spec repository: 'github://rydnr/pharo-eda-errors:main' ].
-	^ spec
-]
-
-{ #category : #dependencies }
 BaselineOfPharoEDAAdapters >> includePharoEDACommon: spec [
        spec
                baseline: 'PharoEDACommon'
                with: [ spec repository: 'github://rydnr/pharo-eda-common:main' ].
        ^ spec
+]
+
+{ #category : #dependencies }
+BaselineOfPharoEDAAdapters >> includePharoEDAErrors: spec [
+	spec
+		baseline: 'PharoEDAErrors'
+		with: [ spec repository: 'github://rydnr/pharo-eda-errors:main' ].
+	^ spec
 ]
 
 { #category : #dependencies }
@@ -96,4 +109,15 @@ BaselineOfPharoEDAAdapters >> includeVoyage: spec [
 				repository: 'github://pharo-nosql/voyage:pharo10-ready/mc' ].
 	^ spec
 
+]
+
+{ #category : #hooks }
+BaselineOfPharoEDAAdapters >> postload: loader package: packageSpec [
+
+	| location |
+	location := (IceRepository registry detect: [ :each | 
+		             each name = 'pharo-eda-adapters' ]) location.
+	EDAIconProvider addDefaultLocation: location / 'resources' / 'icons'.
+	EDACTranslationProvider addDefaultLocation:
+		location / 'resources' / 'l10n'
 ]
