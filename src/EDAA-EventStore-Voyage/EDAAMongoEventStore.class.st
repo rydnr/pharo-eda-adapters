@@ -4,9 +4,7 @@ Class {
 	#traits : 'EDACPrintOnHelper + EDACMongoHelper',
 	#classTraits : 'EDACPrintOnHelper classTrait + EDACMongoHelper classTrait',
 	#classInstVars : [
-		'username',
 		'password',
-		'databaseName',
 		'host',
 		'port',
 		'debug',
@@ -19,7 +17,9 @@ Class {
 		'wireProtocolEnabled',
 		'authenticationMechanism',
 		'urls',
-		'tls'
+		'tls',
+		'database',
+		'user'
 	],
 	#category : #'EDAA-EventStore-Voyage'
 }
@@ -35,13 +35,15 @@ EDAAMongoEventStore class >> authenticationMechanism: anObject [
 ]
 
 { #category : #accessing }
-EDAAMongoEventStore class >> databaseName [
-	^ databaseName
+EDAAMongoEventStore class >> database [
+
+	^ database
 ]
 
 { #category : #accessing }
-EDAAMongoEventStore class >> databaseName: anObject [
-	databaseName := anObject
+EDAAMongoEventStore class >> database: anObject [
+
+	database := anObject
 ]
 
 { #category : #accessing }
@@ -213,13 +215,15 @@ EDAAMongoEventStore class >> urls: aString [
 ]
 
 { #category : #accessing }
-EDAAMongoEventStore class >> username [
-	^ username
+EDAAMongoEventStore class >> user [
+
+	^ user
 ]
 
 { #category : #accessing }
-EDAAMongoEventStore class >> username: anObject [
-	username := anObject
+EDAAMongoEventStore class >> user: anObject [
+
+	user := anObject
 ]
 
 { #category : #accessing }
