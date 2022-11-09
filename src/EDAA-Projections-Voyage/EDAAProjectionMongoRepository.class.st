@@ -4,9 +4,7 @@ Class {
 	#traits : 'EDACMongoHelper',
 	#classTraits : 'EDACMongoHelper classTrait',
 	#classInstVars : [
-		'username',
 		'password',
-		'databaseName',
 		'wireProtocolEnabled',
 		'lazySynchronize',
 		'forceEager',
@@ -19,7 +17,9 @@ Class {
 		'port',
 		'authenticationMechanism',
 		'urls',
-		'tls'
+		'tls',
+		'database',
+		'user'
 	],
 	#category : #'EDAA-Projections-Voyage'
 }
@@ -35,13 +35,15 @@ EDAAProjectionMongoRepository class >> authenticationMechanism: anObject [
 ]
 
 { #category : #accessing }
-EDAAProjectionMongoRepository class >> databaseName [
-	^ databaseName
+EDAAProjectionMongoRepository class >> database [
+
+	^ database
 ]
 
 { #category : #accessing }
-EDAAProjectionMongoRepository class >> databaseName: val [
-	databaseName := val
+EDAAProjectionMongoRepository class >> database: val [
+
+	database := val
 ]
 
 { #category : #accessing }
@@ -213,13 +215,15 @@ EDAAProjectionMongoRepository class >> urls: aString [
 ]
 
 { #category : #accessing }
-EDAAProjectionMongoRepository class >> username [
-	^ username
+EDAAProjectionMongoRepository class >> user [
+
+	^ user
 ]
 
 { #category : #accessing }
-EDAAProjectionMongoRepository class >> username: anObject [
-	username := anObject
+EDAAProjectionMongoRepository class >> user: anObject [
+
+	user := anObject
 ]
 
 { #category : #accessing }
