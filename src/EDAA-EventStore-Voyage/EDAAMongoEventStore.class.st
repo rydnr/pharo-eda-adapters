@@ -59,10 +59,11 @@ EDAAMongoEventStore class >> debug: aBoolean [
 
 { #category : #'class initialization' }
 EDAAMongoEventStore class >> doInitialize [
+
 	self urls: nil.
 	self tls: nil.
-	self databaseName: nil.
-	self username: nil.
+	self database: nil.
+	self user: nil.
 	self password: nil.
 	self debug: nil.
 	self enableReplication: nil.
@@ -174,14 +175,16 @@ EDAAMongoEventStore class >> refreshVoyageSettings [
 
 { #category : #'refresh settings' }
 EDAAMongoEventStore class >> refreshVoyageSettingsOn: aRepository [
-	aRepository username: self username.
+
+	aRepository user: self user.
 	aRepository password: self password.
 	aRepository debug: self debug.
 	self enableReplication
 		ifTrue: [ aRepository enableReplication ]
 		ifFalse: [ aRepository disableReplication ].
 	aRepository ensuringCurrentOnSave: self ensuringCurrentOnSave.
-	aRepository ensuringCurrentReferencesOnQueries: self ensuringCurrentReferencesOnQueries.
+	aRepository ensuringCurrentReferencesOnQueries:
+		self ensuringCurrentReferencesOnQueries.
 	aRepository lazySynchronize: self lazySynchronize.
 	self enableSingleton
 		ifTrue: [ aRepository enableSingleton ]
@@ -263,12 +266,13 @@ EDAAMongoEventStore >> findEventsOfTenant: aTenant ofAggregate: anAggregateRootC
 
 { #category : #persistence }
 EDAAMongoEventStore >> initBackendRepository [
+
 	| result |
 	result := self mongoRepositoryClass
-		mongoUrls: (self csvToCollection: self class urls)
-		database: self class databaseName
-		username: self class username
-		password: self class password.
+		          mongoUrls: (self csvToCollection: self class urls)
+		          database: self class database
+		          username: self class user
+		          password: self class password.
 	"result cache: EDAMongoNoCache new."
 	result debug: self class debug.
 	self class enableReplication
@@ -278,12 +282,12 @@ EDAAMongoEventStore >> initBackendRepository [
 		ifTrue: [ result enableSingleton ]
 		ifFalse: [ result disableSingleton ].
 	result ensuringCurrentOnSave: self class ensuringCurrentOnSave.
-	result
-		ensuringCurrentReferencesOnQueries: self class ensuringCurrentReferencesOnQueries.
-	result
-		ensuringCurrentReferencesOnQueries: self class ensuringCurrentReferencesOnQueries.
+	result ensuringCurrentReferencesOnQueries:
+		self class ensuringCurrentReferencesOnQueries.
+	result ensuringCurrentReferencesOnQueries:
+		self class ensuringCurrentReferencesOnQueries.
 	result lazySynchronize: self class lazySynchronize.
-"	result wireProtocolEnabled: self class wireProtocolEnabled."
+	"	result wireProtocolEnabled: self class wireProtocolEnabled."
 	^ result
 ]
 

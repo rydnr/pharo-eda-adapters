@@ -91,15 +91,15 @@ EDAAStompTopicPublisher class >> withConfig: aConfig [
 
 { #category : #initialization }
 EDAAStompTopicPublisher >> buildClientWith: config [
+
 	| result |
 	result := StampClient new.
-	result login: config username.
+	result login: config user.
 	result passcode: config password.
 	result host: config host.
 	result port: config port.
 	result timeout: config timeout.
 	^ result
-	
 ]
 
 { #category : #private }

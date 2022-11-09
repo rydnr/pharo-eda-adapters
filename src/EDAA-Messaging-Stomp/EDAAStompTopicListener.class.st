@@ -117,9 +117,10 @@ EDAAStompTopicListener >> asyncOnMessageDo: aBlock usingClient: aClient withConf
 
 { #category : #initialization }
 EDAAStompTopicListener >> buildClientWith: aConfig [
+
 	| result |
 	result := StampClient new.
-	result login: aConfig username.
+	result login: aConfig user.
 	result passcode: aConfig password.
 	result host: aConfig host.
 	result port: aConfig port.
@@ -385,7 +386,7 @@ EDAAStompTopicListener >> unsubscribe: id usingClient: aClient [
 ]
 
 { #category : #accessing }
-EDAAStompTopicListener >> username [
+EDAAStompTopicListener >> user [
 
-	^ self config username
+	^ self config user
 ]

@@ -59,10 +59,11 @@ EDAAProjectionMongoRepository class >> debug: aBoolean [
 
 { #category : #'class initialization' }
 EDAAProjectionMongoRepository class >> doInitialize [
+
 	self urls: nil.
 	self tls: nil.
-	self databaseName: nil.
-	self username: nil.
+	self database: nil.
+	self user: nil.
 	self password: nil.
 	self debug: nil.
 	self enableReplication: nil.
@@ -174,14 +175,16 @@ EDAAProjectionMongoRepository class >> refreshVoyageSettings [
 
 { #category : #'refresh settings' }
 EDAAProjectionMongoRepository class >> refreshVoyageSettingsOn: aRepository [
-	aRepository username: self username.
+
+	aRepository user: self user.
 	aRepository password: self password.
 	aRepository debug: self debug.
 	self enableReplication
 		ifTrue: [ aRepository enableReplication ]
 		ifFalse: [ aRepository disableReplication ].
 	aRepository ensuringCurrentOnSave: self ensuringCurrentOnSave.
-	aRepository ensuringCurrentReferencesOnQueries: self ensuringCurrentReferencesOnQueries.
+	aRepository ensuringCurrentReferencesOnQueries:
+		self ensuringCurrentReferencesOnQueries.
 	aRepository lazySynchronize: self lazySynchronize.
 	self enableSingleton
 		ifTrue: [ aRepository enableSingleton ]
