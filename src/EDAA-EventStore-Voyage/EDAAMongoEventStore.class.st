@@ -92,7 +92,7 @@ EDAAMongoEventStore >> initBackendRepository [
 	result debug: self settings debug.
 	self settings enableReplication
 		ifTrue: [ result enableReplication ]
-		ifFalse: [ result disableReplication ].
+		ifFalse: [ "result disableReplication" ].
 	self settings enableSingleton
 		ifTrue: [ result enableSingleton ]
 		ifFalse: [ result disableSingleton ].
