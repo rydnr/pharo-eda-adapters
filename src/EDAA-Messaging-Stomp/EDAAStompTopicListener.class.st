@@ -26,44 +26,18 @@ Class {
 		'client',
 		'listenerProcess',
 		'subscriptionId',
-		'config'
+		'config',
+		'edaApplication'
 	],
 	#category : #'EDAA-Messaging-Stomp'
 }
 
-{ #category : #logging }
-EDAAStompTopicListener class >> logDebugMessage: aMessage beautify: aBoolean [
-	EDACLoggingSettings debugEnabled
-		ifTrue: [ self
-				logMessage: aMessage
-				inCategory: 'DEBUG'
-				inStream: self defaultStream
-				beautify: aBoolean ]
-]
-
-{ #category : #logging }
-EDAAStompTopicListener class >> logErrorMessage: aMessage beautify: aBoolean [
-	EDACLoggingSettings errorEnabled
-		ifTrue: [ self
-				logMessage: aMessage
-				inCategory: 'ERROR'
-				inStream: self defaultStream
-				beautify: aBoolean ]
-]
-
 { #category : #accessing }
 EDAAStompTopicListener class >> logFinish: message usingClient: aClient withConfig: aConfig [
-	self logInfoMessage: 'Published message ', message greaseString , ' in ', aConfig destination greaseString , '.'
-]
 
-{ #category : #logging }
-EDAAStompTopicListener class >> logInfoMessage: aMessage beautify: aBoolean [
-	EDACLoggingSettings infoEnabled
-		ifTrue: [ self
-				logMessage: aMessage
-				inCategory: 'INFO '
-				inStream: self defaultStream
-				beautify: aBoolean ]
+	self logInfoMessage:
+		'Published message ' , message greaseString , ' in '
+		, aConfig destination greaseString , '.'
 ]
 
 { #category : #accessing }
@@ -72,30 +46,11 @@ EDAAStompTopicListener class >> logReceivingMessage: message usingClient: aClien
 		logInfoMessage: 'Receiving message in ' , aSource greaseString , '.'
 ]
 
-{ #category : #logging }
-EDAAStompTopicListener class >> logTraceMessage: aMessage beautify: aBoolean [
-	EDACLoggingSettings traceEnabled
-		ifTrue: [ self
-				logMessage: aMessage
-				inCategory: 'TRACE'
-				inStream: self defaultStream
-				beautify: aBoolean ]
-]
-
-{ #category : #logging }
-EDAAStompTopicListener class >> logWarningMessage: aMessage beautify: aBoolean [
-	^ EDACLoggingSettings warningEnabled
-		ifTrue: [ self
-				logMessage: aMessage
-				inCategory: 'WARN '
-				inStream: self defaultStream
-				beautify: aBoolean ]
-]
-
 { #category : #'instance creation' }
-EDAAStompTopicListener class >> withConfig: aConfig [
+EDAAStompTopicListener class >> withConfig: aConfig forApplication: anEDAApplication [
 	| result |
 	result := self new.
+	result edaApplication: anEDAApplication.
 	result config: aConfig.
 	result client: (result buildClientWith: aConfig).
 	^ result
@@ -179,6 +134,18 @@ EDAAStompTopicListener >> config: anObject [
 EDAAStompTopicListener >> durable [
 
 	^ self config durable
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> edaApplication [
+
+	^ edaApplication
+]
+
+{ #category : #accessing }
+EDAAStompTopicListener >> edaApplication: anObject [
+
+	edaApplication := anObject
 ]
 
 { #category : #lifecycle }

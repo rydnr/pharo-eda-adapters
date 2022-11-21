@@ -104,12 +104,13 @@ BaselineOfPharoEDAAdapters >> includeStamp: spec [
 
 { #category : #dependencies }
 BaselineOfPharoEDAAdapters >> includeVoyage: spec [
+
 	spec
 		baseline: 'Voyage'
-		with: [ spec
-				repository: 'github://pharo-nosql/voyage:pharo10-ready/mc' ].
+		with: [ 
+		spec repository: 'github://pharo-nosql/voyage:' ,  self voyageReleaseForPharoVersion
+                                                , '/mc' ].
 	^ spec
-
 ]
 
 { #category : #hooks }
@@ -121,4 +122,15 @@ BaselineOfPharoEDAAdapters >> postload: loader package: packageSpec [
 	EDACIconProvider addDefaultLocation: location / 'resources' / 'icons'.
 	EDACTranslationProvider addDefaultLocation:
 		location / 'resources' / 'l10n'
+]
+
+{ #category : #dependencies }
+BaselineOfPharoEDAAdapters >> voyageReleaseForPharoVersion [
+
+	^ SystemVersion current major = 8
+		  ifTrue: [ '1.7' ]
+		  ifFalse: [ 
+			  SystemVersion current major = 9
+				  ifTrue: [ '1.7.1' ]
+				  ifFalse: [ 'pharo10-ready' ] ]
 ]
