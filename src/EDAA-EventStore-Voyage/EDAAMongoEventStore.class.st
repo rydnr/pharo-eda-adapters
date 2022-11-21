@@ -3,6 +3,10 @@ Class {
 	#superclass : #EDAPEventStore,
 	#traits : 'EDACPrintOnHelper + EDACMongoHelper',
 	#classTraits : 'EDACPrintOnHelper classTrait + EDACMongoHelper classTrait',
+	#instVars : [
+		'edaApplication',
+		'settings'
+	],
 	#classInstVars : [
 		'password',
 		'host',
@@ -24,219 +28,14 @@ Class {
 	#category : #'EDAA-EventStore-Voyage'
 }
 
-{ #category : #accessing }
-EDAAMongoEventStore class >> authenticationMechanism [
-	^ authenticationMechanism
-]
+{ #category : #'instance creation' }
+EDAAMongoEventStore class >> withConfig: anEDASMongodbEventStoreSettingsJsonAdapter forApplication: anEDASASampleApplication [
 
-{ #category : #accessing }
-EDAAMongoEventStore class >> authenticationMechanism: anObject [
-	authenticationMechanism := anObject
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> database [
-
-	^ database
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> database: anObject [
-
-	database := anObject
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> debug [
-	^ debug
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> debug: aBoolean [
-	debug = aBoolean
-		ifTrue: [ ^ self ].
-	debug := aBoolean.
-	self refreshVoyageSettings
-]
-
-{ #category : #'class initialization' }
-EDAAMongoEventStore class >> doInitialize [
-
-	self urls: nil.
-	self tls: nil.
-	self database: nil.
-	self user: nil.
-	self password: nil.
-	self debug: nil.
-	self enableReplication: nil.
-	self enableSingleton: nil.
-	self ensuringCurrentOnSave: nil.
-	self ensuringCurrentReferencesOnQueries: nil.
-	self forceEager: nil.
-	self lazySynchronize: nil.
-	self wireProtocolEnabled: nil
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> enableReplication [
-	^ enableReplication
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> enableReplication: aBoolean [
-	enableReplication = aBoolean
-		ifTrue: [ ^ self ].
-	enableReplication := aBoolean.
-	self refreshVoyageSettings
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> enableSingleton [
-	^ enableSingleton
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> enableSingleton: aBoolean [
-	enableSingleton = aBoolean
-		ifTrue: [ ^ self ].
-	enableSingleton := aBoolean.
-	self refreshVoyageSettings
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> ensuringCurrentOnSave [
-	^ ensuringCurrentOnSave
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> ensuringCurrentOnSave: aBoolean [
-	ensuringCurrentOnSave = aBoolean
-		ifTrue: [ ^ self ].
-	ensuringCurrentOnSave := aBoolean.
-	self refreshVoyageSettings
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> ensuringCurrentReferencesOnQueries [
-	^ ensuringCurrentReferencesOnQueries
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> ensuringCurrentReferencesOnQueries: aBoolean [
-	ensuringCurrentReferencesOnQueries = aBoolean
-		ifTrue: [ ^ self ].
-	ensuringCurrentReferencesOnQueries := aBoolean.
-	self refreshVoyageSettings
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> forceEager [
-	^ forceEager
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> forceEager: aBoolean [
-	forceEager = aBoolean
-		ifTrue: [ ^ self ].
-	forceEager := aBoolean.
-	self refreshVoyageSettings
-]
-
-{ #category : #'class initialization' }
-EDAAMongoEventStore class >> initialize [
-	self doInitialize
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> lazySynchronize [
-	^ lazySynchronize
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> lazySynchronize: aBoolean [
-	lazySynchronize = aBoolean
-		ifTrue: [ ^ self ].
-	lazySynchronize := aBoolean.
-	self refreshVoyageSettings
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> password [
-	^ password
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> password: anObject [
-	password := anObject
-]
-
-{ #category : #'refresh settings' }
-EDAAMongoEventStore class >> refreshVoyageSettings [
-	EDAAVOMongoRepository allInstancesDo: [ :repo | self refreshVoyageSettingsOn: repo ]
-]
-
-{ #category : #'refresh settings' }
-EDAAMongoEventStore class >> refreshVoyageSettingsOn: aRepository [
-
-	aRepository user: self user.
-	aRepository password: self password.
-	aRepository debug: self debug.
-	self enableReplication
-		ifTrue: [ aRepository enableReplication ]
-		ifFalse: [ aRepository disableReplication ].
-	aRepository ensuringCurrentOnSave: self ensuringCurrentOnSave.
-	aRepository ensuringCurrentReferencesOnQueries:
-		self ensuringCurrentReferencesOnQueries.
-	aRepository lazySynchronize: self lazySynchronize.
-	self enableSingleton
-		ifTrue: [ aRepository enableSingleton ]
-		ifFalse: [ aRepository disableSingleton ].
-	aRepository wireProtocolEnabled: self wireProtocolEnabled
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> tls [
-	^ tls
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> tls: aBoolean [
-	tls := aBoolean
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> urls [
-	^ urls
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> urls: aString [
-	urls := aString
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> user [
-
-	^ user
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> user: anObject [
-
-	user := anObject
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> wireProtocolEnabled [
-	^ wireProtocolEnabled
-]
-
-{ #category : #accessing }
-EDAAMongoEventStore class >> wireProtocolEnabled: aBoolean [
-	wireProtocolEnabled = aBoolean
-		ifTrue: [ ^ self ].
-	wireProtocolEnabled := aBoolean.
-	self refreshVoyageSettings
+	^ self basicNew
+		  settings: anEDASMongodbEventStoreSettingsJsonAdapter;
+		  edaApplication: anEDASASampleApplication;
+		initialize;
+		  yourself
 ]
 
 { #category : #persistence }
@@ -248,6 +47,18 @@ EDAAMongoEventStore >> allEventsOfTenant: aTenant [
 	^ EDAEventSourcingEvent
 		selectMany: eventsCriteria
 		sortBy: (OrderedCollection with: #timestamp -> VOOrder ascending with: #_id -> VOOrder ascending) asDictionary
+]
+
+{ #category : #accessing }
+EDAAMongoEventStore >> edaApplication [
+
+	^ edaApplication
+]
+
+{ #category : #accessing }
+EDAAMongoEventStore >> edaApplication: anObject [
+
+	edaApplication := anObject
 ]
 
 { #category : #persistence }
@@ -273,25 +84,25 @@ EDAAMongoEventStore >> initBackendRepository [
 
 	| result |
 	result := self mongoRepositoryClass
-		          mongoUrls: (self csvToCollection: self class urls)
-		          database: self class database
-		          username: self class user
-		          password: self class password.
+		          mongoUrls: (self csvToCollection: self settings urls)
+		          database: self settings database
+		          username: self settings user
+		          password: self settings password.
 	"result cache: EDAMongoNoCache new."
-	result debug: self class debug.
-	self class enableReplication
+	result debug: self settings debug.
+	self settings enableReplication
 		ifTrue: [ result enableReplication ]
 		ifFalse: [ result disableReplication ].
-	self class enableSingleton
+	self settings enableSingleton
 		ifTrue: [ result enableSingleton ]
 		ifFalse: [ result disableSingleton ].
-	result ensuringCurrentOnSave: self class ensuringCurrentOnSave.
+	result ensuringCurrentOnSave: self settings ensuringCurrentOnSave.
 	result ensuringCurrentReferencesOnQueries:
-		self class ensuringCurrentReferencesOnQueries.
+		self settings ensuringCurrentReferencesOnQueries.
 	result ensuringCurrentReferencesOnQueries:
-		self class ensuringCurrentReferencesOnQueries.
-	result lazySynchronize: self class lazySynchronize.
-	"	result wireProtocolEnabled: self class wireProtocolEnabled."
+		self settings ensuringCurrentReferencesOnQueries.
+	result lazySynchronize: self settings lazySynchronize.
+	"	result wireProtocolEnabled: self settings wireProtocolEnabled."
 	^ result
 ]
 
@@ -303,4 +114,16 @@ EDAAMongoEventStore >> mongoRepositoryClass [
 { #category : #persistence }
 EDAAMongoEventStore >> saveEvents: anEventCollection [
 	anEventCollection do: [ :event | event save ]
+]
+
+{ #category : #accessing }
+EDAAMongoEventStore >> settings [
+
+	^ settings
+]
+
+{ #category : #accessing }
+EDAAMongoEventStore >> settings: anObject [
+
+	settings := anObject
 ]
