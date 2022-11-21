@@ -17,24 +17,8 @@ Class {
 	#category : #BaselineOfPharoEDAAdapters
 }
 
-{ #category : #baselines }
-BaselineOfPharoEDAAdapters >> baseline: spec [
-
-	<baseline>
-	spec for: #common do: [ 
-		spec blessing: #baseline.
-		spec postLoadDoIt: #'postload:package:'.
-		self includePharoEDACommon: spec.
-		self includePharoEDAPorts: spec.
-		self includePharoEDAErrors: spec.
-		self includeStamp: spec.
-		self includeVoyage: spec.
-		self declarePackagesIn: spec.
-		self declareGroupsIn: spec ]
-]
-
 { #category : #meta }
-BaselineOfPharoEDAAdapters >> declareGroupsIn: spec [
+BaselineOfPharoEDAAdapters class >> declareGroupsIn: spec [
 	spec
 		group: 'core'
 			with:
@@ -44,7 +28,7 @@ BaselineOfPharoEDAAdapters >> declareGroupsIn: spec [
 ]
 
 { #category : #meta }
-BaselineOfPharoEDAAdapters >> declarePackagesIn: spec [
+BaselineOfPharoEDAAdapters class >> declarePackagesIn: spec [
 	spec
 		package: #'EDAA-Domain'
 			with: [ spec requires: #('PharoEDACommon' 'PharoEDAPorts') ];
@@ -62,7 +46,7 @@ BaselineOfPharoEDAAdapters >> declarePackagesIn: spec [
 ]
 
 { #category : #dependencies }
-BaselineOfPharoEDAAdapters >> includeMongotalk: spec [
+BaselineOfPharoEDAAdapters class >> includeMongotalk: spec [
 	spec
 		baseline: 'MongoTalk'
 		with: [ spec
@@ -72,7 +56,7 @@ BaselineOfPharoEDAAdapters >> includeMongotalk: spec [
 ]
 
 { #category : #dependencies }
-BaselineOfPharoEDAAdapters >> includePharoEDACommon: spec [
+BaselineOfPharoEDAAdapters class >> includePharoEDACommon: spec [
        spec
                baseline: 'PharoEDACommon'
                with: [ spec repository: 'github://rydnr/pharo-eda-common:main' ].
@@ -80,7 +64,7 @@ BaselineOfPharoEDAAdapters >> includePharoEDACommon: spec [
 ]
 
 { #category : #dependencies }
-BaselineOfPharoEDAAdapters >> includePharoEDAErrors: spec [
+BaselineOfPharoEDAAdapters class >> includePharoEDAErrors: spec [
 	spec
 		baseline: 'PharoEDAErrors'
 		with: [ spec repository: 'github://rydnr/pharo-eda-errors:main' ].
@@ -88,7 +72,7 @@ BaselineOfPharoEDAAdapters >> includePharoEDAErrors: spec [
 ]
 
 { #category : #dependencies }
-BaselineOfPharoEDAAdapters >> includePharoEDAPorts: spec [
+BaselineOfPharoEDAAdapters class >> includePharoEDAPorts: spec [
 	spec
 		baseline: 'PharoEDAPorts'
 		with: [ spec repository: 'github://rydnr/pharo-eda-ports:main' ].
@@ -96,14 +80,14 @@ BaselineOfPharoEDAAdapters >> includePharoEDAPorts: spec [
 ]
 
 { #category : #dependencies }
-BaselineOfPharoEDAAdapters >> includeStamp: spec [
+BaselineOfPharoEDAAdapters class >> includeStamp: spec [
 	spec baseline: 'Stamp' with: [ spec repository: 'github://svenvc/stamp/repository' ].
 	^ spec
 
 ]
 
 { #category : #dependencies }
-BaselineOfPharoEDAAdapters >> includeVoyage: spec [
+BaselineOfPharoEDAAdapters class >> includeVoyage: spec [
 
 	spec
 		baseline: 'Voyage'
@@ -111,6 +95,33 @@ BaselineOfPharoEDAAdapters >> includeVoyage: spec [
 		spec repository: 'github://pharo-nosql/voyage:' ,  self voyageReleaseForPharoVersion
                                                 , '/mc' ].
 	^ spec
+]
+
+{ #category : #dependencies }
+BaselineOfPharoEDAAdapters class >> voyageReleaseForPharoVersion [
+
+	^ SystemVersion current major = 8
+		  ifTrue: [ '1.7' ]
+		  ifFalse: [ 
+			  SystemVersion current major = 9
+				  ifTrue: [ '1.7.1' ]
+				  ifFalse: [ 'pharo10-ready' ] ]
+]
+
+{ #category : #baselines }
+BaselineOfPharoEDAAdapters >> baseline: spec [
+
+	<baseline>
+	spec for: #common do: [ 
+		spec blessing: #baseline.
+		spec postLoadDoIt: #postload:package:.
+		self class includePharoEDACommon: spec;
+		 includePharoEDAPorts: spec;
+		 includePharoEDAErrors: spec;
+		 includeStamp: spec;
+		 includeVoyage: spec;
+		 declarePackagesIn: spec;
+		 declareGroupsIn: spec ]
 ]
 
 { #category : #hooks }
@@ -122,15 +133,4 @@ BaselineOfPharoEDAAdapters >> postload: loader package: packageSpec [
 	EDACIconProvider addDefaultLocation: location / 'resources' / 'icons'.
 	EDACTranslationProvider addDefaultLocation:
 		location / 'resources' / 'l10n'
-]
-
-{ #category : #dependencies }
-BaselineOfPharoEDAAdapters >> voyageReleaseForPharoVersion [
-
-	^ SystemVersion current major = 8
-		  ifTrue: [ '1.7' ]
-		  ifFalse: [ 
-			  SystemVersion current major = 9
-				  ifTrue: [ '1.7.1' ]
-				  ifFalse: [ 'pharo10-ready' ] ]
 ]
