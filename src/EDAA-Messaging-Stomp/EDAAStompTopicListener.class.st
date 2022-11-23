@@ -33,6 +33,12 @@ Class {
 }
 
 { #category : #accessing }
+EDAAStompTopicListener class >> buildIdUsingClient: aClient withConfig: aConfig [
+
+	^ aClient nextId , '-' , aConfig queue
+]
+
+{ #category : #accessing }
 EDAAStompTopicListener class >> logFinish: message usingClient: aClient withConfig: aConfig [
 
 	self logInfoMessage:
@@ -81,11 +87,6 @@ EDAAStompTopicListener >> buildClientWith: aConfig [
 	result port: aConfig port.
 	result timeout: aConfig timeout.
 	^ result
-]
-
-{ #category : #accessing }
-EDAAStompTopicListener >> buildIdUsingClient: aClient withConfig: aConfig [
-	^ aClient nextId , '-', aConfig destination
 ]
 
 { #category : #accessing }
@@ -180,9 +181,10 @@ EDAAStompTopicListener >> logInit: message usingClient: aClient withConfig: aCon
 
 ]
 
-{ #category : #accessing }
+{ #category : #lifecycle }
 EDAAStompTopicListener >> nextId [
-	^ self buildIdUsingClient: self client withConfig: self config
+
+	^ self class buildIdUsingClient: self client withConfig: self config
 ]
 
 { #category : #lifecycle }
