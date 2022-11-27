@@ -326,7 +326,7 @@ EDAAStompTopicListener >> syncOnMessageDo: aBlock usingClient: aClient withConfi
 				self
 					manageError: ex
 					forMessage: text
-					usingErrorStrategy: EDAECommandConsumingErrorBehavior strategy ] ] ]
+					usingErrorStrategy: config errorStrategy ] ] ]
 		on: PrimitiveFailed , StampError
 		do: [ :ex | 
 			self logErrorMessage: ex greaseString.
