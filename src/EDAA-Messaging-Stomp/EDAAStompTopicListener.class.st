@@ -268,7 +268,7 @@ EDAAStompTopicListener >> syncOnMessageDo: aBlock usingClient: aClient withConfi
 		self class
 			logReceivingMessage: message body greaseString
 			usingClient: aClient
-			from: conf destination.
+			from: conf queue.
 		[ 
 		| ack |
 		aBlock value: text.
@@ -296,7 +296,7 @@ EDAAStompTopicListener >> syncOnMessageDo: aBlock usingClient: aClient withConfi
 		self class
 			logReceivingMessage: message body greaseString
 			usingClient: aClient
-			from: conf destination ]
+			from: conf queue ]
 			on: Error - Break
 			do: [ :ex | 
 				((ex isKindOf: StampError) and:
