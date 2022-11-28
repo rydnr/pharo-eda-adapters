@@ -187,7 +187,7 @@ EDAAStompTopicListener >> nextId [
 	^ self class buildIdUsingClient: self client withConfig: self config
 ]
 
-{ #category : #lifecycle }
+{ #category : #reading }
 EDAAStompTopicListener >> onMessageDo: aBlock [
 	self listenerProcess: (self asyncOnMessageDo: aBlock usingClient: self client withConfig: self config).
 	^ self listenerProcess

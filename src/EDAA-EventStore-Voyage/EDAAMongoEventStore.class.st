@@ -63,13 +63,19 @@ EDAAMongoEventStore >> edaApplication: anObject [
 
 { #category : #persistence }
 EDAAMongoEventStore >> findEventsOfTenant: aTenant ofAggregate: anAggregateRootClass whereCriteria: aCriteriaDictionary [
+
 	| eventsCriteria |
 	eventsCriteria := Dictionary newFrom: aCriteriaDictionary.
 	eventsCriteria at: 'tenant' put: aTenant greaseString.
-	eventsCriteria at: 'aggregateRootClass' put: anAggregateRootClass greaseString.
-	^ EDAEventSourcingEvent
-		selectMany: eventsCriteria
-		sortBy: (OrderedCollection with: #timestamp -> VOOrder ascending) asDictionary
+	eventsCriteria
+		at: 'aggregateRootClass'
+		put: anAggregateRootClass greaseString.
+	^ self repository
+		  selectMany: self edaApplication eventBaseClass
+		where: eventsCriteria
+		  sortBy:
+		  (OrderedCollection with: #timestamp -> VOOrder ascending)
+			  asDictionary
 ]
 
 { #category : #persistence }
