@@ -31,24 +31,23 @@ BaselineOfPharoEDAAdapters class >> declareGroupsIn: spec [
 BaselineOfPharoEDAAdapters class >> declarePackagesIn: spec [
 
 	spec
+		package: #'EDAA-Domain'
+		with: [ spec requires: #( 'PharoEDACommon' 'PharoEDAPorts' ) ];
 		package: #'EDAA-EventStore-InMemory'
 		with: [ spec requires: #( 'PharoEDACommon' 'PharoEDAPorts' ) ];
 		package: #'EDAA-EventStore-Voyage'
 		with: [ 
 			spec requires: #( 'Voyage' 'PharoEDACommon' 'PharoEDAPorts' ) ];
-		package: #'EDAA-Messaging-Stomp'
-		with: [ 
-			spec requires: #( 'Stamp' 'PharoEDACommon' 'PharoEDAPorts' ) ];
+		package: #'EDAA-Messaging-Stomp' with: [ 
+			spec requires:
+					#( 'Stamp' 'PharoEDACommon' 'PharoEDAPorts' 'EDAA-Domain' ) ];
 		package: #'EDAA-Projections-Voyage'
 		with: [ 
 			spec requires: #( 'Voyage' 'PharoEDACommon' 'PharoEDAPorts' ) ];
 		package: #'EDAA-SMTP'
 		with: [ spec requires: #( 'PharoEDACommon' ) ];
-		package: #'EDAA-Domain'
-		with: [ spec requires: #( 'PharoEDACommon' 'PharoEDAPorts' ) ];
 		package: #'EDAA-Domain-Tests'
-		with: [ spec requires: #( 'EDAA-Domain' 'EDAA-Messaging-Stomp') ]
-
+		with: [ spec requires: #( 'EDAA-Domain' 'EDAA-Messaging-Stomp' ) ]
 ]
 
 { #category : #dependencies }
