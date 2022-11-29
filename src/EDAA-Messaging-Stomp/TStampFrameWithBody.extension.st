@@ -3,16 +3,16 @@ Extension { #name : #TStampFrameWithBody }
 { #category : #'*EDAA-Messaging-Stomp' }
 TStampFrameWithBody >> contentType [
 
-	^ self headerAt: #'content-type' ifAbsent: [ 
-		  self
-			  headerAt: #'Content-Type'
-			  ifAbsent: [ self class defaultContentType ] ]
+	^ self contentTypeIfAbsent: StampConstants defaultContentType
 ]
 
 { #category : #'*EDAA-Messaging-Stomp' }
-TStampFrameWithBody classSide >> defaultContentType [
+TStampFrameWithBody >> contentTypeIfAbsent: defaultContentType [
 
-	^ 'application/json'
+	^ self headerAt: #'content-type' ifAbsent: [ 
+		  self
+			  headerAt: #'Content-Type'
+			  ifAbsent: [ defaultContentType ] ]
 ]
 
 { #category : #'*EDAA-Messaging-Stomp' }
