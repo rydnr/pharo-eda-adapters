@@ -13,9 +13,7 @@ Class {
 	#traits : 'EDACLogging',
 	#classTraits : 'EDACLogging classTrait',
 	#instVars : [
-		'client'
-	],
-	#classInstVars : [
+		'client',
 		'username',
 		'routingKey',
 		'password',
@@ -29,56 +27,6 @@ Class {
 	],
 	#category : #'EDAA-Messaging-Stomp'
 }
-
-{ #category : #logging }
-EDAAStompTopicPublisher class >> logDebugMessage: aMessage beautify: aBoolean [
-	EDACLoggingSettings debugEnabled
-		ifTrue: [ self
-				logMessage: aMessage
-				inCategory: 'DEBUG'
-				inStream: self defaultStream
-				beautify: aBoolean ]
-]
-
-{ #category : #logging }
-EDAAStompTopicPublisher class >> logErrorMessage: aMessage beautify: aBoolean [
-	EDACLoggingSettings errorEnabled
-		ifTrue: [ self
-				logMessage: aMessage
-				inCategory: 'ERROR'
-				inStream: self defaultStream
-				beautify: aBoolean ]
-]
-
-{ #category : #logging }
-EDAAStompTopicPublisher class >> logInfoMessage: aMessage beautify: aBoolean [
-	EDACLoggingSettings infoEnabled
-		ifTrue: [ self
-				logMessage: aMessage
-				inCategory: 'INFO '
-				inStream: self defaultStream
-				beautify: aBoolean ]
-]
-
-{ #category : #logging }
-EDAAStompTopicPublisher class >> logTraceMessage: aMessage beautify: aBoolean [
-	EDACLoggingSettings traceEnabled
-		ifTrue: [ self
-				logMessage: aMessage
-				inCategory: 'TRACE'
-				inStream: self defaultStream
-				beautify: aBoolean ]
-]
-
-{ #category : #logging }
-EDAAStompTopicPublisher class >> logWarningMessage: aMessage beautify: aBoolean [
-	^ EDACLoggingSettings warningEnabled
-		ifTrue: [ self
-				logMessage: aMessage
-				inCategory: 'WARN '
-				inStream: self defaultStream
-				beautify: aBoolean ]
-]
 
 { #category : #'instance creation' }
 EDAAStompTopicPublisher class >> withConfig: aConfig [
@@ -124,7 +72,8 @@ EDAAStompTopicPublisher >> destination [
 
 { #category : #accessing }
 EDAAStompTopicPublisher >> destinationWithRoutingKey: key [
-	^ '/exchange/', self exchange, '/', key
+
+	^ '/exchange/' , self config exchange , '/' , key
 ]
 
 { #category : #accessing }
@@ -160,11 +109,12 @@ EDAAStompTopicPublisher >> nextId [
 
 { #category : #API }
 EDAAStompTopicPublisher >> publishError: aMessage [
+
 	^ self
-		publishError: true
-		message: aMessage
-		usingClient: self client
-		withConfig: self class
+		  publishError: true
+		  message: aMessage
+		  usingClient: self client
+		  withConfig: self config
 ]
 
 { #category : #API }
@@ -194,15 +144,22 @@ EDAAStompTopicPublisher >> publishError: isError message: aMessage usingClient: 
 
 { #category : #API }
 EDAAStompTopicPublisher >> publishMessage: aMessage [
+
 	^ self
-		publishError: false message: aMessage
-		usingClient: self client
-		withConfig: self class
+		  publishError: false
+		  message: aMessage
+		  usingClient: self client
+		  withConfig: self config
 ]
 
 { #category : #API }
 EDAAStompTopicPublisher >> publishMessage: aMessage inTransaction: transactionId [
-	^ self publishMessage: aMessage inTransaction: transactionId usingClient: self client withConfig: self class
+
+	^ self
+		  publishMessage: aMessage
+		  inTransaction: transactionId
+		  usingClient: self client
+		  withConfig: self config
 ]
 
 { #category : #API }
@@ -226,22 +183,28 @@ EDAAStompTopicPublisher >> publishMessage: aMessage inTransaction: transactionId
 		on: destination
 ]
 
-{ #category : #API }
+{ #category : #writing }
 EDAAStompTopicPublisher >> publishMessage: aMessage withRoutingKey: aRoutingKeyString [
-	^ self publishMessage: aMessage withRoutingKey: aRoutingKeyString usingClient: self client withConfig: self class
+
+	^ self
+		  publishMessage: aMessage
+		  withRoutingKey: aRoutingKeyString
+		  usingClient: self client
+		  withConfig: self config
 ]
 
 { #category : #API }
-EDAAStompTopicPublisher >> publishMessage: aMessage withRoutingKey: aRoutingKeyString usingClient: aClient withConfig: config [
+EDAAStompTopicPublisher >> publishMessage: aMessage withRoutingKey: aRoutingKeyString usingClient: aClient withConfig: aConfig [
+
 	| sendFrame destination |
-	destination := config destinationWithRoutingKey: aRoutingKeyString.
+	destination := self destinationWithRoutingKey: aRoutingKeyString.
 	self
 		logPublishingMessage: aMessage
 		usingClient: aClient
 		on: destination.
-	aClient isConnected
-		ifFalse: [ aClient open ].
-	[ sendFrame := StampSendFrame new.
+	aClient isConnected ifFalse: [ aClient open ].
+	[ 
+	sendFrame := StampSendFrame new.
 	sendFrame destination: destination.
 	sendFrame text: aMessage.
 	sendFrame persistent: config durable.
@@ -249,8 +212,7 @@ EDAAStompTopicPublisher >> publishMessage: aMessage withRoutingKey: aRoutingKeyS
 	self
 		logMessagePublished: aMessage
 		usingClient: aClient
-		on: destination ]
-		ensure: [ aClient close ]
+		on: destination ] ensure: [ aClient close ]
 ]
 
 { #category : #API }
