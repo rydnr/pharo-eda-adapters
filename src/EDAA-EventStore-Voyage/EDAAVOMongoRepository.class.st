@@ -48,6 +48,7 @@ EDAAVOMongoRepository >> mongoDatabaseFrom: mongo [
 
 	<TODO: 'add authenticationMechanism'>
 	| db |
+	mongo authMechanism: (self authenticationMechanism root: mongo).
 	db := mongo databaseNamed: self databaseName.
 	(self username isNotNil and: [ self username notEmpty ]) ifTrue: [ 
 		db username: self username password: self password ].

@@ -29,12 +29,12 @@ Class {
 }
 
 { #category : #'instance creation' }
-EDAAMongoEventStore class >> withConfig: anEDASMongodbEventStoreSettingsJsonAdapter forApplication: anEDASASampleApplication [
+EDAAMongoEventStore class >> withConfig: anEDASMongodbEventStoreSettings forApplication: anEDAApplication [
 
 	^ self basicNew
-		  settings: anEDASMongodbEventStoreSettingsJsonAdapter;
-		  edaApplication: anEDASASampleApplication;
-		initialize;
+		  settings: anEDASMongodbEventStoreSettings;
+		  edaApplication: anEDAApplication;
+		  initialize;
 		  yourself
 ]
 
