@@ -1,8 +1,23 @@
 Class {
 	#name : #EDAAVOProjectionMongoRepository,
 	#superclass : #VOMongoRepository,
+	#instVars : [
+		'authenticationMechanism'
+	],
 	#category : #'EDAA-Projections-Voyage'
 }
+
+{ #category : #accessing }
+EDAAVOProjectionMongoRepository >> authenticationMechanism [
+
+	^ authenticationMechanism
+]
+
+{ #category : #accessing }
+EDAAVOProjectionMongoRepository >> authenticationMechanism: anObject [
+
+	authenticationMechanism := anObject
+]
 
 { #category : #persistence }
 EDAAVOProjectionMongoRepository >> collectionNameFor: aClass [

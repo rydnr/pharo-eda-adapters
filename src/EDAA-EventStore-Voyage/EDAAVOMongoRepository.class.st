@@ -3,6 +3,9 @@ Class {
 	#superclass : #VOMongoRepository,
 	#traits : 'EDACPrintOnHelper + EDACPragmaHelper',
 	#classTraits : 'EDACPrintOnHelper classTrait + EDACPragmaHelper classTrait',
+	#instVars : [
+		'authenticationMechanism'
+	],
 	#category : #'EDAA-EventStore-Voyage'
 }
 
@@ -17,6 +20,18 @@ EDAAVOMongoRepository class >> voyageCollectionName [
 	^ 'EDAEventSourcingEvent'
 ]
 
+{ #category : #accessing }
+EDAAVOMongoRepository >> authenticationMechanism [
+
+	^ authenticationMechanism
+]
+
+{ #category : #accessing }
+EDAAVOMongoRepository >> authenticationMechanism: anObject [
+
+	authenticationMechanism := anObject
+]
+
 { #category : #private }
 EDAAVOMongoRepository >> collectionNameFor: aClass [
 
@@ -26,6 +41,17 @@ EDAAVOMongoRepository >> collectionNameFor: aClass [
 				  ifNil: [ aClass voyageCollectionName ]
 				  ifNotNil: [ :p | p arguments first ] ]
 		  ifNotNil: [ :p | p arguments first ]
+]
+
+{ #category : #private }
+EDAAVOMongoRepository >> mongoDatabaseFrom: mongo [
+
+	<TODO: 'add authenticationMechanism'>
+	| db |
+	db := mongo databaseNamed: self databaseName.
+	(self username isNotNil and: [ self username notEmpty ]) ifTrue: [ 
+		db username: self username password: self password ].
+	^ db
 ]
 
 { #category : #persistence }

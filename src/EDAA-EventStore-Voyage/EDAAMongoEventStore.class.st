@@ -94,6 +94,8 @@ EDAAMongoEventStore >> initBackendRepository [
 		          database: self settings database
 		          username: self settings user
 		          password: self settings password.
+	result authenticationMechanism:
+		(MongoAuthMechanism from: self settings authenticationMechanism).
 	"result cache: EDAMongoNoCache new."
 	result debug: self settings debug.
 	self settings enableReplication
