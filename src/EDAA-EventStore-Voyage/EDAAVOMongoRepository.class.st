@@ -7,6 +7,12 @@ Class {
 }
 
 { #category : #voyage }
+EDAAVOMongoRepository class >> errorClass [
+
+	^ EDAInvalidApplication
+]
+
+{ #category : #voyage }
 EDAAVOMongoRepository class >> voyageCollectionName [
 	^ 'EDAEventSourcingEvent'
 ]
@@ -14,8 +20,12 @@ EDAAVOMongoRepository class >> voyageCollectionName [
 { #category : #private }
 EDAAVOMongoRepository >> collectionNameFor: aClass [
 
-	^ (self retrievePragma: #eventStoreCollection: in: aClass) ifNil: [ aClass voyageCollectionName ] ifNotNil: [ :p | p arguments first ]
-
+	^ (self retrievePragma: #eventStoreCollection: in: aClass)
+		  ifNil: [ 
+			  (self retrievePragma: #eventStoreCollection: in: aClass class)
+				  ifNil: [ aClass voyageCollectionName ]
+				  ifNotNil: [ :p | p arguments first ] ]
+		  ifNotNil: [ :p | p arguments first ]
 ]
 
 { #category : #persistence }
