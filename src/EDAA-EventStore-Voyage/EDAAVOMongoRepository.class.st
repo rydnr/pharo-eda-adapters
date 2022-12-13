@@ -1,8 +1,8 @@
 Class {
 	#name : #EDAAVOMongoRepository,
 	#superclass : #VOMongoRepository,
-	#traits : 'EDACPrintOnHelper',
-	#classTraits : 'EDACPrintOnHelper classTrait',
+	#traits : 'EDACPrintOnHelper + EDACPragmaHelper',
+	#classTraits : 'EDACPrintOnHelper classTrait + EDACPragmaHelper classTrait',
 	#category : #'EDAA-EventStore-Voyage'
 }
 
@@ -11,9 +11,11 @@ EDAAVOMongoRepository class >> voyageCollectionName [
 	^ 'EDAEventSourcingEvent'
 ]
 
-{ #category : #voyage }
+{ #category : #private }
 EDAAVOMongoRepository >> collectionNameFor: aClass [
-	^ aClass voyageCollectionName
+
+	^ (self retrievePragma: #eventStoreCollection: in: aClass) ifNil: [ aClass voyageCollectionName ] ifNotNil: [ :p | p arguments first ]
+
 ]
 
 { #category : #persistence }
