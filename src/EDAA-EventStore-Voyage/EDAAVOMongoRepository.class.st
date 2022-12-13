@@ -35,9 +35,9 @@ EDAAVOMongoRepository >> authenticationMechanism: anObject [
 { #category : #private }
 EDAAVOMongoRepository >> collectionNameFor: aClass [
 
-	^ (self retrievePragma: #eventStoreCollection: in: aClass)
+	^ (self retrievePragma: #eventStoreCollection: in: aClass upTo: EDAEventSourcingEvent)
 		  ifNil: [ 
-			  (self retrievePragma: #eventStoreCollection: in: aClass class)
+			  (self retrievePragma: #eventStoreCollection: in: aClass class upTo: EDAEventSourcingEvent class)
 				  ifNil: [ aClass voyageCollectionName ]
 				  ifNotNil: [ :p | p arguments first ] ]
 		  ifNotNil: [ :p | p arguments first ]

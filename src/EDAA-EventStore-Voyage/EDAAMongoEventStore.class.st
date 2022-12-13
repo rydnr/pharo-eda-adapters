@@ -121,7 +121,8 @@ EDAAMongoEventStore >> mongoRepositoryClass [
 
 { #category : #persistence }
 EDAAMongoEventStore >> saveEvents: anEventCollection [
-	anEventCollection do: [ :event | event save ]
+
+	anEventCollection do: [ :event | self repository save: event ]
 ]
 
 { #category : #accessing }
