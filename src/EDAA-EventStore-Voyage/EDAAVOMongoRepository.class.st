@@ -46,7 +46,6 @@ EDAAVOMongoRepository >> collectionNameFor: aClass [
 { #category : #private }
 EDAAVOMongoRepository >> mongoDatabaseFrom: mongo [
 
-	<TODO: 'add authenticationMechanism'>
 	| db |
 	mongo authMechanism: (self authenticationMechanism root: mongo).
 	db := mongo databaseNamed: self databaseName.
