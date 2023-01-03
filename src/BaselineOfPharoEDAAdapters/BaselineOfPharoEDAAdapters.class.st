@@ -94,11 +94,16 @@ BaselineOfPharoEDAAdapters class >> includeStamp: spec [
 { #category : #dependencies }
 BaselineOfPharoEDAAdapters class >> includeVoyage: spec [
 
-	spec
-		baseline: 'Voyage'
-		with: [ 
-		spec repository: 'github://pharo-nosql/voyage:' ,  self voyageReleaseForPharoVersion
-                                                , '/mc' ].
+	spec baseline: 'Voyage' with: [
+		(self environment hasClassNamed: #GtImage) ifTrue: [ 
+		spec repository:
+			'github://rydnr/voyage:' , self voyageReleaseForPharoVersion
+			, '/mc'
+			
+			 ] ifFalse: [ 
+		spec repository:
+			'github://pharo-nosql/voyage:' , self voyageReleaseForPharoVersion
+			, '/mc' ] ].
 	^ spec
 ]
 
